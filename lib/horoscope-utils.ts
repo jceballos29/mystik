@@ -3,7 +3,6 @@ import type {
   HoroscopeScoreFactor,
 } from "@/lib/validations/horoscope.schema"
 
-/** Format the lucky time window as a displayable string. */
 export function formatLuckyTimeWindow(
   tw: HoroscopeLucky["time_window"]
 ): string {
@@ -11,7 +10,6 @@ export function formatLuckyTimeWindow(
   return tw.display
 }
 
-/** Descriptive label for a 0–100 energy score. */
 export function getScoreLabel(score: number): string {
   if (score < 25) return "Challenging"
   if (score < 45) return "Low support"
@@ -20,7 +18,6 @@ export function getScoreLabel(score: number): string {
   return "Strong tailwind"
 }
 
-/** Extract the reason text for a given dimension from the score_factors array. */
 export function getFactorReason(
   factors: HoroscopeScoreFactor[],
   dim: string

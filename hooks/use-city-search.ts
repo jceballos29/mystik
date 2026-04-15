@@ -74,17 +74,14 @@ export function useCitySearch({ initialCity }: UseCitySearchOptions = {}) {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
-  const selectCity = useCallback(
-    (city: CityResult) => {
-      setSelectedCity(city)
-      setQuery(city.name)
-      setIsOpen(false)
-      setResults([])
-      setSearchError(false)
-      setActiveIndex(-1)
-    },
-    []
-  )
+  const selectCity = useCallback((city: CityResult) => {
+    setSelectedCity(city)
+    setQuery(city.name)
+    setIsOpen(false)
+    setResults([])
+    setSearchError(false)
+    setActiveIndex(-1)
+  }, [])
 
   const handleQueryChange = useCallback(
     (value: string) => {

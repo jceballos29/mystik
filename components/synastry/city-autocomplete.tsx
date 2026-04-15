@@ -97,7 +97,6 @@ export function CityAutocomplete({
         </div>
       </div>
 
-      {/* Selected city indicator */}
       {selectedCity && (
         <p className="mt-1.5 ml-1 flex items-center gap-1.5 text-[10px] text-koromiko-500">
           <MapPin className="h-3 w-3" />
@@ -105,7 +104,6 @@ export function CityAutocomplete({
         </p>
       )}
 
-      {/* No results feedback */}
       {query &&
         query.length >= 2 &&
         !selectedCity &&
@@ -117,7 +115,6 @@ export function CityAutocomplete({
           </p>
         )}
 
-      {/* Search error feedback */}
       {searchError && !loading && (
         <p className="mt-1.5 ml-1 text-[10px] text-destructive">
           Could not search for cities. Please try again.

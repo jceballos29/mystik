@@ -5,10 +5,9 @@ const personSchema = z
   .object({
     name: z.string().optional(),
     date: z.string().min(1, "Birth date is required"),
-    time: z.string().refine(
-      (v) => v === "" || /^\d{2}:\d{2}$/.test(v),
-      { message: "Expected format: HH:mm" }
-    ),
+    time: z.string().refine((v) => v === "" || /^\d{2}:\d{2}$/.test(v), {
+      message: "Expected format: HH:mm",
+    }),
     location: z.custom<CityResult | null>(
       (v) =>
         v === null ||

@@ -22,10 +22,6 @@ interface SynastryError {
 
 export type SynastryResult = SynastrySuccess | SynastryError
 
-// Cached fetcher — same pair of people = same result.
-// "use cache" is used instead of fetch-level caching because Next.js does not
-// cache POST requests in its Data Cache. The cache key is automatically derived
-// from the serialized payload, so different pairs produce different cache entries.
 async function fetchSynastryFromAPI(payload: SynastryApiPayload) {
   "use cache"
   cacheLife("hours")

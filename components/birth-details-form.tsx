@@ -9,8 +9,6 @@ import type { CityResult } from "@/lib/validations/geo.schema"
 import { CityAutocomplete } from "@/components/synastry/city-autocomplete"
 import { encodeBase64Url } from "@/lib/utils"
 
-// ── Schema ───────────────────────────────────────────────────────────
-
 const birthSchema = z
   .object({
     date: z.string().min(1, "Birth date is required"),
@@ -34,8 +32,6 @@ const birthSchema = z
 
 type BirthFormValues = z.infer<typeof birthSchema>
 
-// ── Component ────────────────────────────────────────────────────────
-
 export function BirthDetailsForm() {
   const router = useRouter()
 
@@ -57,15 +53,12 @@ export function BirthDetailsForm() {
 
   const timeUnknown = useWatch({ control, name: "timeUnknown" })
 
-  // ── Submit ───────────────────────────────────────────────────────
   const onSubmit = (values: BirthFormValues) => {
     if (!values.city) return
 
     const [year, month, day] = values.date.split("-")
     const [hour, min] = values.time.split(":")
 
-    // Store all numeric fields as numbers so the receiving page
-    // gets proper types from JSON.parse without casting.
     const birth = {
       year: Number(year),
       month: Number(month),
@@ -85,9 +78,7 @@ export function BirthDetailsForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="mx-auto w-full max-w-lg space-y-8"
     >
-      {/* Date + Time row */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        {/* Birth Date */}
         <div className="space-y-2">
           <label
             htmlFor="birth-date"
@@ -114,7 +105,6 @@ export function BirthDetailsForm() {
           )}
         </div>
 
-        {/* Birth Time */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <label
@@ -151,7 +141,6 @@ export function BirthDetailsForm() {
         </div>
       </div>
 
-      {/* Note for unknown time */}
       {timeUnknown && (
         <p className="-mt-4 text-[10px] leading-relaxed text-star-dust-600 italic">
           Note: Accuracy for houses and ascendant will be limited. We&apos;ll
@@ -159,7 +148,6 @@ export function BirthDetailsForm() {
         </p>
       )}
 
-      {/* City Search */}
       <Controller
         name="city"
         control={control}
@@ -179,7 +167,6 @@ export function BirthDetailsForm() {
         </p>
       )}
 
-      {/* Submit */}
       <div className="space-y-3 pt-4">
         <button
           type="submit"
@@ -188,9 +175,6 @@ export function BirthDetailsForm() {
         >
           See today&apos;s guidance
         </button>
-        <p className="text-center text-[9px] font-medium tracking-widest text-star-dust-600 uppercase">
-          Takes ~3 seconds • Free Reading
-        </p>
       </div>
     </form>
   )

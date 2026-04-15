@@ -43,7 +43,6 @@ export function StrengthsChallenges({
     <section className="px-6 py-16">
       <div className="mx-auto max-w-4xl">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-          {/* Strengths */}
           <div>
             <div className="mb-6 flex items-center gap-2">
               <span
@@ -68,7 +67,6 @@ export function StrengthsChallenges({
             </div>
           </div>
 
-          {/* Challenges */}
           <div>
             <div className="mb-6 flex items-center gap-2">
               <span

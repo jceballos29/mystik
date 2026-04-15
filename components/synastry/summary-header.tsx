@@ -16,7 +16,7 @@ interface SummaryHeaderProps {
 export function SummaryHeader({ summary, payload }: SummaryHeaderProps) {
   const overallScore = summary.scores.find((s) => s.key === "overall")
   const overallValue = overallScore?.value ?? 0
-  const circumference = svgCircumference(42) // r=42
+  const circumference = svgCircumference(42)
 
   return (
     <section className="px-6 pt-16 pb-24">
@@ -26,12 +26,11 @@ export function SummaryHeader({ summary, payload }: SummaryHeaderProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
         >
-          {/* Archetype badge */}
           <span className="mb-4 inline-block text-[10px] font-bold tracking-[0.4em] text-koromiko-400/60 uppercase">
             Connection Archetype
           </span>
 
-          <h1 className="font-title mb-3 text-4xl text-foreground sm:text-5xl md:text-6xl">
+          <h1 className="mb-3 font-title text-4xl text-foreground sm:text-5xl md:text-6xl">
             {summary.archetype.label}
           </h1>
 
@@ -39,7 +38,6 @@ export function SummaryHeader({ summary, payload }: SummaryHeaderProps) {
             {summary.archetype.one_liner}
           </p>
 
-          {/* Person details */}
           {payload && (
             <div className="mb-12 flex flex-col justify-center gap-6 font-mono text-xs text-muted-foreground sm:flex-row sm:gap-12">
               <div className="flex flex-col items-center">
@@ -61,7 +59,6 @@ export function SummaryHeader({ summary, payload }: SummaryHeaderProps) {
           )}
         </motion.div>
 
-        {/* Overall score ring */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -107,7 +104,6 @@ export function SummaryHeader({ summary, payload }: SummaryHeaderProps) {
           </span>
         </motion.div>
 
-        {/* Narrative */}
         {summary.narrative && (
           <motion.p
             initial={{ opacity: 0 }}
@@ -119,7 +115,6 @@ export function SummaryHeader({ summary, payload }: SummaryHeaderProps) {
           </motion.p>
         )}
 
-        {/* Synastry Bands */}
         {summary.bands && (
           <motion.div
             initial={{ opacity: 0, y: 10 }}

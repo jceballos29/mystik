@@ -2,10 +2,10 @@ import { encodeBase64Url } from "@/lib/utils"
 import type { SynastryApiPayload } from "@/lib/validations/synastry.schema"
 import type { SynastryFormValues } from "@/lib/validations/synastry-form.schema"
 
-export function buildSynastryPayload(values: SynastryFormValues): SynastryApiPayload {
+export function buildSynastryPayload(
+  values: SynastryFormValues
+): SynastryApiPayload {
   const { a, b } = values
-  // The zodResolver guarantees location is non-null when this function is called,
-  // but TypeScript cannot infer that from .refine(). Explicit guard instead of !.
   if (!a.location || !b.location) {
     throw new Error("[buildSynastryPayload] locations must be non-null")
   }

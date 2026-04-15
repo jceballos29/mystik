@@ -1,7 +1,5 @@
 import { z } from "zod"
 
-// ── Upstream city (API may return "country" or "country_code") ───────
-
 const upstreamCitySchema = z
   .object({
     name: z.string(),
@@ -30,8 +28,6 @@ export const geoSearchResponseSchema = z
     results: value.results,
     count: value.count ?? value.results.length,
   }))
-
-// ── Inferred Types ───────────────────────────────────────────────────
 
 export type CityResult = z.infer<
   typeof geoSearchResponseSchema

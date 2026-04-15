@@ -14,9 +14,6 @@ export function formatLocalDate(
   options?: Intl.DateTimeFormatOptions
 ): string {
   try {
-    // "YYYY-MM-DD" strings are parsed as UTC midnight by the Date constructor,
-    // which displays the previous day for users in UTC- timezones. Appending
-    // T12:00:00 forces local-time interpretation at noon, preventing off-by-one.
     const normalized = /^\d{4}-\d{2}-\d{2}$/.test(dateStr)
       ? dateStr + "T12:00:00"
       : dateStr
@@ -31,10 +28,6 @@ export function formatLocalDate(
   }
 }
 
-/**
- * Encodes a value as a URL-safe base64 string (no padding).
- * JSON → encodeURIComponent → raw bytes → btoa → URL-safe chars.
- */
 export function encodeBase64Url(obj: unknown): string {
   const json = JSON.stringify(obj)
   const utf8Bytes = encodeURIComponent(json).replace(
@@ -47,10 +40,6 @@ export function encodeBase64Url(obj: unknown): string {
     .replace(/=/g, "")
 }
 
-/**
- * Decodes a URL-safe base64 string produced by `encodeBase64Url`.
- * Throws if the string is not valid base64 or not valid JSON.
- */
 export function decodeBase64Url(encoded: string): unknown {
   const padded = encoded.replace(/-/g, "+").replace(/_/g, "/")
   const decoded = atob(padded)

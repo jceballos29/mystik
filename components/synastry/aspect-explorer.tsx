@@ -72,11 +72,10 @@ export function AspectExplorer({ aspects }: AspectExplorerProps) {
   return (
     <section className="px-6 py-16" id="explorer">
       <div className="mx-auto max-w-4xl">
-        <h2 className="font-title mb-8 text-center text-2xl text-foreground">
+        <h2 className="mb-8 text-center font-title text-2xl text-foreground">
           Aspect Explorer
         </h2>
 
-        {/* Filters */}
         <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
           <div className="flex flex-wrap gap-2">
             <Chip

@@ -5,6 +5,8 @@ import { ScrollToTop } from "@/components/scroll-to-top"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import "./globals.css"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 
 const elMessiri = El_Messiri({
   variable: "--font-title",
@@ -38,11 +40,18 @@ export default function RootLayout({
         "font-sans",
         prozaLibre.variable
       )}
+      style={{
+        scrollBehavior: "smooth",
+      }}
     >
       <body>
         <ThemeProvider>
           <ScrollToTop />
-          {children}
+          <main className="min-h-screen bg-background text-foreground">
+            <Header />
+            {children}
+          </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

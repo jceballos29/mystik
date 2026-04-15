@@ -1,19 +1,18 @@
-import Link from "next/link"
 import type { Metadata } from "next"
+import Link from "next/link"
 
-import { Header } from "@/components/header"
 import { Section } from "@/components/section"
-import { Typography } from "@/components/ui/typography"
-import { SummaryHeader } from "@/components/synastry/summary-header"
+import { AspectExplorer } from "@/components/synastry/aspect-explorer"
 import { DomainScores } from "@/components/synastry/domain-scores"
 import { StrengthsChallenges } from "@/components/synastry/strengths-challenges"
-import { AspectExplorer } from "@/components/synastry/aspect-explorer"
+import { SummaryHeader } from "@/components/synastry/summary-header"
+import { Typography } from "@/components/ui/typography"
 import { calculateSynastry } from "@/lib/astro-api/synastry"
+import { decodeBase64Url, formatLocalDate } from "@/lib/utils"
 import {
   synastryApiPayloadSchema,
   type SynastryApiPayload,
 } from "@/lib/validations/synastry.schema"
-import { formatLocalDate, decodeBase64Url } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: "Synastry Report — Mystik",
@@ -85,9 +84,7 @@ export default async function SynastryPage({
 
   return (
     <main className="min-h-svh">
-      <Header />
 
-      {/* Hero */}
       <Section
         id="synastry-hero"
         className="bg-background bg-[url('/hero.jpg')] bg-cover bg-center"
@@ -103,7 +100,6 @@ export default async function SynastryPage({
         </div>
       </Section>
 
-      {/* Report */}
       <Section id="synastry-report" className="px-0">
         <div className="z-10 mx-auto max-w-4xl">
           <SummaryHeader summary={data.summary} payload={payload} />
@@ -115,23 +111,6 @@ export default async function SynastryPage({
           <AspectExplorer aspects={data.aspects} />
         </div>
       </Section>
-
-      <footer className="mt-8 border-t border-star-dust-800 px-6 py-12 text-center">
-        <p className="text-xs text-muted-foreground">
-          Report generated {formatLocalDate(data.meta.generated_at)}
-        </p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Powered by{" "}
-          <a
-            href="https://freeastroapi.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline underline-offset-2 transition-colors hover:text-koromiko-400"
-          >
-            FreeAstroAPI.com
-          </a>
-        </p>
-      </footer>
     </main>
   )
 }

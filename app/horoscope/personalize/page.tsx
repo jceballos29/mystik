@@ -1,34 +1,29 @@
 "use client"
 
-import { useEffect, useState, Suspense, useMemo } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
-import {
-  ArrowLeft,
-  MapPin,
-  CalendarDays,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react"
-import { Header } from "@/components/header"
+import { ScoreBar } from "@/components/horoscope/score-bar"
 import { Section } from "@/components/section"
-import { decodeBase64Url } from "@/lib/utils"
 import { getPersonalizedHoroscope } from "@/lib/astro-api/horoscope"
 import {
   formatLuckyTimeWindow,
   getFactorReason,
   getScoreLabel,
 } from "@/lib/horoscope-utils"
-import { ScoreBar } from "@/components/horoscope/score-bar"
+import { decodeBase64Url } from "@/lib/utils"
 import type {
   HoroscopeData,
   HoroscopeTransit,
 } from "@/lib/validations/horoscope.schema"
-
-// ── Constants ───────────────────────────────────────────────────────
+import {
+  ArrowLeft,
+  CalendarDays,
+  ChevronDown,
+  ChevronUp,
+  MapPin,
+} from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { Suspense, useEffect, useMemo, useState } from "react"
 
 const TRANSIT_STAGGER_MS = 80
-
-// ── Sub-components ───────────────────────────────────────────────────
 
 function SkeletonBlock({ className }: { className?: string }) {
   return (
@@ -39,30 +34,25 @@ function SkeletonBlock({ className }: { className?: string }) {
 function LoadingSkeleton() {
   return (
     <div className="z-10 mx-auto max-w-3xl space-y-12 py-16">
-      {/* Back button skeleton */}
       <SkeletonBlock className="h-4 w-32 rounded" />
 
-      {/* Hero */}
       <div className="space-y-4 py-16 text-center">
         <SkeletonBlock className="mx-auto h-12 w-48 rounded" />
         <SkeletonBlock className="mx-auto h-4 w-32 rounded" />
       </div>
 
-      {/* Focus areas */}
       <div className="flex flex-wrap justify-center gap-3">
         {[1, 2, 3].map((i) => (
           <SkeletonBlock key={i} className="h-6 w-24 rounded" />
         ))}
       </div>
 
-      {/* Main text */}
       <div className="space-y-3">
         <SkeletonBlock className="h-8 w-full rounded" />
         <SkeletonBlock className="h-8 w-full rounded" />
         <SkeletonBlock className="h-8 w-4/5 rounded" />
       </div>
 
-      {/* Transit cards */}
       <div className="space-y-6 pt-8">
         <SkeletonBlock className="h-3 w-36 rounded" />
         {[1, 2, 3].map((i) => (
@@ -77,7 +67,6 @@ function LoadingSkeleton() {
         ))}
       </div>
 
-      {/* Score grid */}
       <div className="space-y-6 border border-star-dust-800 p-8">
         <SkeletonBlock className="h-3 w-32 rounded" />
         {[1, 2, 3, 4, 5].map((i) => (
@@ -120,11 +109,9 @@ function TransitCard({
       className="group relative border-l-2 border-star-dust-800 pb-12 pl-8 last:pb-0"
       style={{ animationDelay: `${index * TRANSIT_STAGGER_MS}ms` }}
     >
-      {/* Timeline dot */}
       <div className="absolute top-1 -left-1.25 h-2.25 w-2.25 rounded-full border border-star-dust-700 bg-background transition-colors group-hover:border-koromiko-500" />
 
       <div className="space-y-4">
-        {/* Header row */}
         <div className="flex flex-wrap items-center gap-3">
           <span className="text-[11px] font-bold tracking-[0.2em] text-star-dust-300 uppercase">
             {transit_planet.label}{" "}
@@ -153,12 +140,10 @@ function TransitCard({
           )}
         </div>
 
-        {/* Main explanation */}
         <p className="text-base leading-relaxed font-light text-star-dust-200 md:text-lg">
           {mainText}
         </p>
 
-        {/* Supporting guidance (expandable) */}
         {supporting.length > 0 && (
           <div>
             <button
@@ -192,7 +177,6 @@ function TransitCard({
           </div>
         )}
 
-        {/* Tags */}
         {tags.length > 0 && (
           <div className="flex flex-wrap gap-2 pt-2">
             {tags.map((tag) => (
@@ -238,15 +222,10 @@ function ErrorState({
   )
 }
 
-// ── Main inner component (needs Suspense because of useSearchParams) ──
-
 function PersonalizeContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
 
-  // Decode birth payload from the URL-safe base64 query param.
-  // Note: base64 is obfuscation only — not encryption. Anyone with the URL
-  // can decode it. It keeps the URL readable without exposing raw JSON.
   interface BirthParams {
     year?: number
     month?: number
@@ -276,9 +255,6 @@ function PersonalizeContent() {
   const lon = bp?.lon ?? null
   const city = bp?.city ?? null
 
-  // Validate URL params synchronously — no setState needed.
-  // Use == null instead of ! to avoid false positives for numeric 0
-  // (e.g., equatorial cities with lat=0 or Greenwich meridian with lng=0).
   const paramError = useMemo<string | null>(() => {
     if (
       year == null ||
@@ -298,7 +274,6 @@ function PersonalizeContent() {
 
   const [data, setData] = useState<HoroscopeData | null>(null)
   const [apiError, setApiError] = useState<string | null>(null)
-  // Start loading only if params are valid; no setState needed for the invalid case
   const [loading, setLoading] = useState(paramError === null)
   const [retryKey, setRetryKey] = useState(0)
 
@@ -339,7 +314,6 @@ function PersonalizeContent() {
 
   const error = paramError ?? apiError
 
-  // ── Date display ─────────────────────────────────────────────────
   const birthDateLabel =
     year && month && day && !paramError
       ? new Date(
@@ -355,7 +329,6 @@ function PersonalizeContent() {
 
   return (
     <div className="z-10 mx-auto max-w-3xl py-16">
-      {/* ── Navigation bar ─────────────────────────────────────── */}
       <div className="mb-12 flex flex-wrap items-center justify-between gap-4">
         <button
           type="button"
@@ -382,18 +355,14 @@ function PersonalizeContent() {
         </div>
       </div>
 
-      {/* ── Loading ─────────────────────────────────────────────── */}
       {loading && <LoadingSkeleton />}
 
-      {/* ── Error ───────────────────────────────────────────────── */}
       {error && !loading && (
         <ErrorState message={error} onRetry={handleRetry} />
       )}
 
-      {/* ── Reading ─────────────────────────────────────────────── */}
       {data && !loading && !error && (
         <>
-          {/* ── 1. Hero ──────────────────────────────────────── */}
           <div className="mb-16 text-center">
             <p className="mb-4 text-[10px] font-bold tracking-[0.4em] text-star-dust-500 uppercase">
               Your Personal Reading
@@ -411,7 +380,6 @@ function PersonalizeContent() {
             </p>
           </div>
 
-          {/* ── 2. Focus Areas ───────────────────────────────── */}
           {data.personal?.focus_areas &&
             data.personal.focus_areas.length > 0 && (
               <div className="mb-12">
@@ -431,9 +399,7 @@ function PersonalizeContent() {
               </div>
             )}
 
-          {/* ── 3. Main Reading ──────────────────────────────── */}
           <div className="mb-16">
-            {/* Theme + Keywords */}
             <div className="mb-8 flex flex-wrap gap-3">
               <span className="border border-star-dust-700 px-3 py-1.5 text-[10px] font-bold tracking-[0.4em] text-koromiko-500/80 uppercase">
                 {data.content.theme}
@@ -448,7 +414,6 @@ function PersonalizeContent() {
               ))}
             </div>
 
-            {/* Drop cap reading */}
             <p className="text-2xl leading-relaxed font-light text-star-dust-200 md:text-3xl">
               <span className="float-left mt-1 mr-4 border-r border-star-dust-800 pr-4 text-[4.5rem] leading-[0.85] font-light text-star-dust-600 select-none md:text-[5.5rem]">
                 {data.content.text.charAt(0)}
@@ -456,7 +421,6 @@ function PersonalizeContent() {
               {data.content.text.slice(1)}
             </p>
 
-            {/* Supporting insights */}
             {data.content.supporting_insights &&
               data.content.supporting_insights.length > 0 && (
                 <div className="clear-both mt-8 space-y-2 pt-4">
@@ -472,7 +436,6 @@ function PersonalizeContent() {
               )}
           </div>
 
-          {/* ── 4. Transit Deep-Dive ─────────────────────────── */}
           {data.personal?.transits_top &&
             data.personal.transits_top.length > 0 && (
               <div className="clear-both mb-16">
@@ -487,7 +450,6 @@ function PersonalizeContent() {
                 </div>
 
                 <div className="relative">
-                  {/* Gradient fade line */}
                   <div className="absolute top-1 left-0 ml-px h-full w-px bg-linear-to-b from-star-dust-700 via-star-dust-800 to-transparent" />
 
                   <div className="space-y-8">
@@ -505,9 +467,7 @@ function PersonalizeContent() {
               </div>
             )}
 
-          {/* ── 5. Data Grid (Energy + Cosmic) ───────────────── */}
           <div className="mb-8 grid grid-cols-1 gap-px border border-star-dust-600 md:grid-cols-2">
-            {/* Energy Forecast (left) */}
             <div className="space-y-8 p-8 md:p-10">
               <h3 className="text-[10px] font-bold tracking-[0.4em] text-star-dust-500 uppercase">
                 Energy Forecast
@@ -551,7 +511,6 @@ function PersonalizeContent() {
               </div>
             </div>
 
-            {/* Cosmic Context (right) */}
             <div className="space-y-10 border-t border-star-dust-600 p-8 md:border-t-0 md:border-l md:p-10">
               <div>
                 <h3 className="mb-6 text-[10px] font-bold tracking-[0.4em] text-star-dust-500 uppercase">
@@ -576,7 +535,6 @@ function PersonalizeContent() {
                   </div>
                 </div>
 
-                {/* Sky aspects */}
                 {data.astro.highlights.filter((h) => h.type === "sky_aspect")
                   .length > 0 && (
                   <div className="space-y-2 border-t border-star-dust-800 pt-6">
@@ -594,7 +552,6 @@ function PersonalizeContent() {
                 )}
               </div>
 
-              {/* Lucky */}
               <div>
                 <h3 className="mb-6 text-[10px] font-bold tracking-[0.4em] text-star-dust-500 uppercase">
                   Daily Anchors
@@ -629,7 +586,6 @@ function PersonalizeContent() {
             </div>
           </div>
 
-          {/* ── 6. Guidance (Do / Don't) ─────────────────────── */}
           {((data.content.do && data.content.do.length > 0) ||
             (data.content.dont && data.content.dont.length > 0)) && (
             <div className="grid grid-cols-1 gap-px border border-star-dust-600 md:grid-cols-2">
@@ -677,14 +633,10 @@ function PersonalizeContent() {
   )
 }
 
-// ── Page ─────────────────────────────────────────────────────────────
-
 export default function PersonalizePage() {
   return (
     <main className="min-h-svh">
-      <Header />
 
-      {/* Hero */}
       <Section
         id="personalize-hero"
         className="bg-background bg-[url('/horoscope-daily-hero.jpg')] bg-cover bg-center"
@@ -705,7 +657,6 @@ export default function PersonalizePage() {
         </div>
       </Section>
 
-      {/* Content */}
       <Section id="personalize-reading">
         <Suspense
           fallback={

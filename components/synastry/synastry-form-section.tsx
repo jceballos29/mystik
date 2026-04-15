@@ -48,7 +48,6 @@ export function SynastryFormSection() {
     })
   }
 
-  // If Person A has errors and the user is on step 2, navigate back so they're visible
   const onInvalid = (fieldErrors: FieldErrors<SynastryFormValues>) => {
     if (fieldErrors.a && step === 2) setStep(1)
   }
@@ -60,7 +59,6 @@ export function SynastryFormSection() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="w-full">
-      {/* Tabs */}
       <div className="relative mb-8 flex border-b border-star-dust-700">
         <button
           type="button"
@@ -118,7 +116,7 @@ export function SynastryFormSection() {
         </AnimatePresence>
       </div>
 
-      <div className="mt-8 flex items-center justify-between">
+      <div className="mt-4 flex items-center justify-between">
         {step === 2 ? (
           <button
             type="button"
@@ -136,7 +134,7 @@ export function SynastryFormSection() {
             type="button"
             variant="outline"
             onClick={handleNext}
-            className="border-star-dust-700 hover:border-koromiko-500/50"
+            className="border-star-dust-700 hover:border-koromiko-500/50 w-full"
           >
             Next Person →
           </Button>

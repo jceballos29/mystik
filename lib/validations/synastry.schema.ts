@@ -1,7 +1,5 @@
 import { z } from "zod"
 
-// ── Domain ───────────────────────────────────────────────────────────
-
 export const DOMAINS = [
   "romance",
   "communication",
@@ -12,8 +10,6 @@ export const DOMAINS = [
 ] as const
 
 export type SynastryDomain = (typeof DOMAINS)[number]
-
-// ── Input schemas (frontend form → API payload) ──────────────────────
 
 export const synastryPersonInputSchema = z.object({
   name: z.string().optional(),
@@ -35,8 +31,6 @@ export const synastryApiPayloadSchema = z.object({
 
 export type SynastryPersonInput = z.infer<typeof synastryPersonInputSchema>
 export type SynastryApiPayload = z.infer<typeof synastryApiPayloadSchema>
-
-// ── Response schemas ─────────────────────────────────────────────────
 
 const metaSchema = z.object({
   calculation: z
@@ -136,8 +130,6 @@ export const synastryApiResponseSchema = z.object({
   summary: summarySchema,
   aspects: z.array(aspectSchema),
 })
-
-// ── Inferred types ────────────────────────────────────────────────────
 
 export type SynastryApiResponse = z.infer<typeof synastryApiResponseSchema>
 export type SynastrySummary = z.infer<typeof summarySchema>

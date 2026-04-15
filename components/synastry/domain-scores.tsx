@@ -37,7 +37,7 @@ export function DomainScores({ summary }: DomainScoresProps) {
           {domainScores.map((score, i) => {
             const normalized = normalizeScore(score.value)
             const color = domainColorHex(score.key)
-            const circumference = svgCircumference(24) // r=24
+            const circumference = svgCircumference(24)
             const isTension = score.key === "tension"
             const drivers = summary.drivers_by_domain?.[score.key] ?? []
             const isHovered = hoveredDomain === score.key
@@ -98,7 +98,6 @@ export function DomainScores({ summary }: DomainScoresProps) {
                   </span>
                 )}
 
-                {/* Driver chips on hover */}
                 {isHovered && drivers.length > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: 4 }}

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-interface TypographyProps extends React.HTMLAttributes<HTMLElement> {}
+type TypographyProps = React.HTMLAttributes<HTMLElement>
 
 const H1 = React.forwardRef<HTMLHeadingElement, TypographyProps>(
   ({ className, ...props }, ref) => (
@@ -146,7 +146,6 @@ const Muted = React.forwardRef<HTMLParagraphElement, TypographyProps>(
 )
 Muted.displayName = "Muted"
 
-// Table is a bit more complex, providing a wrapper and basic structure
 const TableWrapper = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>

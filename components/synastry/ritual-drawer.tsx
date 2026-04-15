@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Dialog as DialogPrimitive } from "radix-ui"
 import { XIcon } from "lucide-react"
@@ -25,14 +25,18 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
   const [activeBlock, setActiveBlock] = useState<"supportive" | "challenging">(
     "supportive"
   )
+  const [prevAspectKey, setPrevAspectKey] = useState<string | undefined>(
+    undefined
+  )
 
-  useEffect(() => {
+  if (aspect?.key !== prevAspectKey) {
+    setPrevAspectKey(aspect?.key)
     if (aspect) {
       setActiveBlock(
         aspect.default_block === "challenging" ? "challenging" : "supportive"
       )
     }
-  }, [aspect])
+  }
 
   const lean = aspect ? getPolarityLean(aspect.polarity_score) : "balanced"
 
@@ -63,7 +67,6 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
                 transition={{ type: "spring", damping: 30, stiffness: 300 }}
               >
                 <div className="p-6 sm:p-8">
-                  {/* Close */}
                   <div className="mb-6 flex justify-end">
                     <DialogPrimitive.Close className="p-1 text-muted-foreground transition-colors hover:text-foreground">
                       <XIcon className="h-5 w-5" aria-hidden="true" />
@@ -79,12 +82,11 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
                     supportive and challenging perspectives.
                   </DialogPrimitive.Description>
 
-                  {/* Header */}
                   <div className="mb-8">
                     <span className="font-mono text-[10px] tracking-wider text-muted-foreground uppercase">
                       #{aspect.rank} · {strengthLabel(aspect.strength)}
                     </span>
-                    <h2 className="font-title mt-1 mb-2 text-3xl text-foreground">
+                    <h2 className="mt-1 mb-2 font-title text-3xl text-foreground">
                       {aspect.label}
                     </h2>
 
@@ -110,7 +112,6 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
                     </div>
                   </div>
 
-                  {/* Polarity toggle */}
                   {aspect.display_policy === "both_sides" && (
                     <div className="mb-8 flex border border-star-dust-700 bg-background/50 p-1">
                       <PolarityToggleButton
@@ -128,7 +129,6 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
                     </div>
                   )}
 
-                  {/* Block content */}
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeBlock}
@@ -144,7 +144,6 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
                     </motion.div>
                   </AnimatePresence>
 
-                  {/* Muted other side when single-display */}
                   {aspect.display_policy !== "both_sides" && (
                     <div className="mt-8 border-t border-star-dust-700 pt-8">
                       <p className="mb-4 text-xs tracking-wider text-muted-foreground uppercase">
@@ -171,7 +170,6 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
                     </div>
                   )}
 
-                  {/* Interpretation note */}
                   <div className="mt-10 border-t border-star-dust-700 pt-6">
                     <p className="text-xs leading-relaxed text-muted-foreground">
                       <span className="text-star-dust-400">

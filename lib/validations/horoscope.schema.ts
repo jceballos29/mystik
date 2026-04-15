@@ -1,13 +1,9 @@
 import { z } from "zod"
 
-// ── Reusable primitives ──────────────────────────────────────────────
-
 const keyLabelSchema = z.object({
   key: z.string(),
   label: z.string(),
 })
-
-// ── Scores ───────────────────────────────────────────────────────────
 
 export const horoscopeScoresSchema = z.object({
   overall: z.number().optional(),
@@ -16,8 +12,6 @@ export const horoscopeScoresSchema = z.object({
   money: z.number(),
   health: z.number(),
 })
-
-// ── Score Factors ────────────────────────────────────────────────────
 
 const scoreDriverSchema = z.object({
   type: z.string(),
@@ -42,8 +36,6 @@ const scoreFactorSchema = z.object({
   drivers: z.array(scoreDriverSchema).optional(),
 })
 
-// ── Lucky ────────────────────────────────────────────────────────────
-
 const luckyTimeWindowSchema = z.object({
   display: z.string(),
   start: z.string(),
@@ -57,8 +49,6 @@ export const horoscopeLuckySchema = z.object({
   time_window: z.union([z.string(), luckyTimeWindowSchema]),
 })
 
-// ── Content ──────────────────────────────────────────────────────────
-
 export const horoscopeContentSchema = z.object({
   text: z.string(),
   theme: z.string(),
@@ -67,8 +57,6 @@ export const horoscopeContentSchema = z.object({
   dont: z.array(z.string()).optional(),
   supporting_insights: z.array(z.string()).optional(),
 })
-
-// ── Astro ────────────────────────────────────────────────────────────
 
 const highlightSchema = z.object({
   type: z.string(),
@@ -81,8 +69,6 @@ export const horoscopeAstroSchema = z.object({
   moon_phase: keyLabelSchema,
   highlights: z.array(highlightSchema),
 })
-
-// ── Personal (personalized horoscope only) ───────────────────────────
 
 const transitExplanationSchema = z.object({
   main: z.string(),
@@ -107,15 +93,11 @@ const personalSchema = z.object({
   confidence_score: z.number().optional(),
 })
 
-// ── Scores Meta ──────────────────────────────────────────────────────
-
 const scoresMetaSchema = z.object({
   overall_method: z.string(),
   weights: z.record(z.string(), z.number()),
   rounding: z.string(),
 })
-
-// ── Horoscope Data ───────────────────────────────────────────────────
 
 export const horoscopeDataSchema = z.object({
   sign: z.string(),
@@ -128,8 +110,6 @@ export const horoscopeDataSchema = z.object({
   personal: personalSchema.optional(),
   scores_meta: scoresMetaSchema.optional(),
 })
-
-// ── Meta ─────────────────────────────────────────────────────────────
 
 export const horoscopeMetaSchema = z.object({
   request_id: z.string(),
@@ -153,14 +133,10 @@ export const horoscopeMetaSchema = z.object({
   }),
 })
 
-// ── Full API Response ────────────────────────────────────────────────
-
 export const horoscopeApiResponseSchema = z.object({
   meta: horoscopeMetaSchema,
   data: horoscopeDataSchema,
 })
-
-// ── Inferred Types ───────────────────────────────────────────────────
 
 export type HoroscopeData = z.infer<typeof horoscopeDataSchema>
 export type HoroscopeScores = z.infer<typeof horoscopeScoresSchema>

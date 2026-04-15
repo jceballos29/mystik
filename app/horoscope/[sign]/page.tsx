@@ -1,19 +1,18 @@
-import type { Metadata } from "next"
-import { notFound } from "next/navigation"
-import { Header } from "@/components/header"
+import { ScoreBar } from "@/components/horoscope/score-bar"
 import { Section } from "@/components/section"
 import { Typography } from "@/components/ui/typography"
-import { zodiacSigns } from "@/lib/zodiac-signs"
 import { getDailyHoroscope } from "@/lib/astro-api/horoscope"
 import {
   formatLuckyTimeWindow,
   getFactorReason,
   getScoreLabel,
 } from "@/lib/horoscope-utils"
-import { ScoreBar } from "@/components/horoscope/score-bar"
+import { zodiacSigns } from "@/lib/zodiac-signs"
+import { ArrowLeft } from "lucide-react"
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import { notFound } from "next/navigation"
 
 function ErrorState({ message }: { message: string }) {
   return (
@@ -28,13 +27,9 @@ function ErrorState({ message }: { message: string }) {
   )
 }
 
-// ── Static params ──────────────────────────────────────────────────────
-
 export function generateStaticParams() {
   return zodiacSigns.map((sign) => ({ sign: sign.id }))
 }
-
-// ── Metadata ──────────────────────────────────────────────────────────
 
 export async function generateMetadata({
   params,
@@ -49,8 +44,6 @@ export async function generateMetadata({
     description: `Daily horoscope for ${zodiacSign.name}. Love, career, money, and health forecast.`,
   }
 }
-
-// ── Page ─────────────────────────────────────────────────────────────
 
 export default async function ZodiacSignPage({
   params,
@@ -74,10 +67,8 @@ export default async function ZodiacSignPage({
   const meta = result.error ? null : result.meta
 
   return (
-    <main className="min-h-svh">
-      <Header />
+    <>
 
-      {/* ── Hero ─────────────────────────────────────────────────── */}
       <Section
         id="sign-hero"
         className="bg-background bg-[url('/horoscope-daily-hero.jpg')] bg-cover bg-center"
@@ -95,10 +86,8 @@ export default async function ZodiacSignPage({
         </div>
       </Section>
 
-      {/* ── Content ──────────────────────────────────────────────── */}
       <Section id="horoscope">
         <div className="z-10 mx-auto max-w-3xl py-16">
-          {/* Navigation */}
           <div className="mb-8 flex items-center justify-between">
             <Link
               href="/"
@@ -115,7 +104,6 @@ export default async function ZodiacSignPage({
             </Link>
           </div>
 
-          {/* Sign header */}
           <div className="mb-8 flex items-center gap-3">
             <figure className="aspect-square w-10 overflow-hidden">
               <Image
@@ -139,15 +127,11 @@ export default async function ZodiacSignPage({
             )}
           </div>
 
-          {/* Error state */}
           {result.error && <ErrorState message={result.error} />}
 
-          {/* ── Horoscope data ──────────────────────────────────── */}
           {horoscope && meta && (
             <>
-              {/* ── 1. Main Reading ─────────────────────────────── */}
               <div className="mx-auto mb-16 max-w-3xl text-center">
-                {/* Theme + Keywords badges */}
                 <div className="mb-8 flex flex-wrap justify-center gap-3">
                   <span className="border border-star-dust-700 px-3 py-1.5 text-[10px] font-bold tracking-[0.4em] text-koromiko-500/80 uppercase">
                     {horoscope.content.theme}
@@ -162,7 +146,6 @@ export default async function ZodiacSignPage({
                   ))}
                 </div>
 
-                {/* Main reading with drop cap */}
                 <p className="text-2xl leading-relaxed font-light text-star-dust-200 md:text-3xl">
                   <span className="float-left mt-1 mr-4 border-r border-star-dust-800 pr-4 text-[4.5rem] leading-[0.85] font-light text-star-dust-600 select-none md:text-[5.5rem]">
                     {horoscope.content.text.charAt(0)}
@@ -170,7 +153,6 @@ export default async function ZodiacSignPage({
                   {horoscope.content.text.slice(1)}
                 </p>
 
-                {/* Supporting insights */}
                 {horoscope.content.supporting_insights &&
                   horoscope.content.supporting_insights.length > 0 && (
                     <div className="mt-8 space-y-2">
@@ -186,16 +168,13 @@ export default async function ZodiacSignPage({
                   )}
               </div>
 
-              {/* ── 2. Data Grid (Scores + Cosmic Context) ─────── */}
               <div className="mb-8 grid grid-cols-1 gap-px border border-star-dust-600 md:grid-cols-2">
-                {/* Scores (left) */}
                 <div className="space-y-8 p-8 md:p-10">
                   <h3 className="mb-6 text-[10px] font-bold tracking-[0.4em] text-star-dust-500 uppercase">
                     Energy Forecast
                   </h3>
 
                   <div className="space-y-6">
-                    {/* Overall score */}
                     {horoscope.scores.overall !== undefined && (
                       <div className="space-y-2 border-b border-star-dust-800 pb-6">
                         <div className="flex items-center gap-4">
@@ -224,7 +203,6 @@ export default async function ZodiacSignPage({
                       </div>
                     )}
 
-                    {/* Dimension scores */}
                     {(["love", "career", "money", "health"] as const).map(
                       (dim) => (
                         <ScoreBar
@@ -238,7 +216,6 @@ export default async function ZodiacSignPage({
                   </div>
                 </div>
 
-                {/* Cosmic Context (right) */}
                 <div className="space-y-10 border-t border-star-dust-600 p-8 md:border-t-0 md:border-l md:p-10">
                   <div>
                     <h3 className="mb-6 text-[10px] font-bold tracking-[0.4em] text-star-dust-500 uppercase">
@@ -263,7 +240,6 @@ export default async function ZodiacSignPage({
                       </div>
                     </div>
 
-                    {/* Planetary Aspects */}
                     {horoscope.astro.highlights.filter(
                       (h) => h.type === "sky_aspect"
                     ).length > 0 && (
@@ -284,7 +260,6 @@ export default async function ZodiacSignPage({
                       </div>
                     )}
 
-                    {/* Daily Anchors */}
                     <div className="border-t border-star-dust-800 pt-6">
                       <h3 className="mb-6 text-[10px] font-bold tracking-[0.4em] text-star-dust-500 uppercase">
                         Daily Anchors
@@ -320,7 +295,6 @@ export default async function ZodiacSignPage({
                 </div>
               </div>
 
-              {/* ── 4. Guidance (Do / Don't) ────────────────────── */}
               {(horoscope.content.do && horoscope.content.do.length > 0) ||
               (horoscope.content.dont && horoscope.content.dont.length > 0) ? (
                 <div className="grid grid-cols-1 gap-px border border-star-dust-600 md:grid-cols-2">
@@ -371,6 +345,6 @@ export default async function ZodiacSignPage({
           )}
         </div>
       </Section>
-    </main>
+    </>
   )
 }

@@ -2,8 +2,7 @@ import type { MetadataRoute } from "next"
 import { zodiacSigns } from "@/lib/zodiac-signs"
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base =
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://mystik.vercel.app"
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mystik.vercel.app"
   const buildDate = new Date()
 
   return [
