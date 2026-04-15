@@ -1,0 +1,165 @@
+"use client"
+
+import { motion, AnimatePresence } from "framer-motion"
+import { Loader2, MapPin } from "lucide-react"
+import type { KeyboardEvent } from "react"
+
+import type { CityResult } from "@/lib/validations/geo.schema"
+import { useCitySearch } from "@/hooks/use-city-search"
+import { cn } from "@/lib/utils"
+
+interface CityAutocompleteProps {
+  label: string
+  onSelect: (city: CityResult) => void
+  onClear?: () => void
+  initialCity?: CityResult
+}
+
+export function CityAutocomplete({
+  label,
+  onSelect,
+  onClear,
+  initialCity,
+}: CityAutocompleteProps) {
+  const {
+    query,
+    selectedCity,
+    results,
+    loading,
+    isOpen,
+    searchError,
+    activeIndex,
+    setActiveIndex,
+    containerRef,
+    selectCity,
+    handleQueryChange,
+    setIsOpen,
+  } = useCitySearch({ initialCity })
+
+  const handleSelect = (city: CityResult) => {
+    selectCity(city)
+    onSelect(city)
+  }
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (!isOpen || results.length === 0) return
+    if (e.key === "ArrowDown") {
+      setActiveIndex((i) => Math.min(i + 1, results.length - 1))
+      e.preventDefault()
+    } else if (e.key === "ArrowUp") {
+      setActiveIndex((i) => Math.max(i - 1, 0))
+      e.preventDefault()
+    } else if (e.key === "Enter" && activeIndex >= 0) {
+      handleSelect(results[activeIndex])
+      e.preventDefault()
+    } else if (e.key === "Escape") {
+      setIsOpen(false)
+      setActiveIndex(-1)
+    }
+  }
+
+  return (
+    <div className="relative" ref={containerRef}>
+      <label
+        htmlFor={`city-input-${label}`}
+        className="mb-1.5 ml-1 block text-[10px] font-bold tracking-[0.4em] text-muted-foreground uppercase"
+      >
+        {label}
+      </label>
+      <div className="relative">
+        <input
+          id={`city-input-${label}`}
+          type="text"
+          value={query}
+          onChange={(e) => {
+            handleQueryChange(e.target.value)
+            if (selectedCity) {
+              onClear?.()
+            }
+          }}
+          onKeyDown={handleKeyDown}
+          placeholder="Search city..."
+          autoComplete="off"
+          aria-activedescendant={
+            activeIndex >= 0 ? `city-option-${activeIndex}` : undefined
+          }
+          className={cn(
+            "w-full rounded-none border border-star-dust-700 bg-card px-4 py-3 text-sm text-foreground transition-colors placeholder:text-muted-foreground focus:border-koromiko-500/50 focus:outline-none",
+            query && !selectedCity && "border-destructive/50"
+          )}
+        />
+        <div className="absolute top-1/2 right-3 -translate-y-1/2">
+          {loading ? (
+            <Loader2 className="h-4 w-4 animate-spin text-star-dust-500" />
+          ) : (
+            <MapPin className="h-4 w-4 text-star-dust-700" />
+          )}
+        </div>
+      </div>
+
+      {/* Selected city indicator */}
+      {selectedCity && (
+        <p className="mt-1.5 ml-1 flex items-center gap-1.5 text-[10px] text-koromiko-500">
+          <MapPin className="h-3 w-3" />
+          {selectedCity.name} · {selectedCity.timezone}
+        </p>
+      )}
+
+      {/* No results feedback */}
+      {query &&
+        query.length >= 2 &&
+        !selectedCity &&
+        !loading &&
+        !isOpen &&
+        !searchError && (
+          <p className="mt-1.5 ml-1 text-[10px] text-star-dust-500 italic">
+            No results. Try a different spelling.
+          </p>
+        )}
+
+      {/* Search error feedback */}
+      {searchError && !loading && (
+        <p className="mt-1.5 ml-1 text-[10px] text-destructive">
+          Could not search for cities. Please try again.
+        </p>
+      )}
+
+      <AnimatePresence>
+        {isOpen && results.length > 0 && (
+          <motion.div
+            role="listbox"
+            aria-label="City search results"
+            aria-live="polite"
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 5 }}
+            className="absolute right-0 left-0 z-50 mt-1 max-h-60 overflow-y-auto border border-star-dust-700 bg-card shadow-xl"
+          >
+            {results.map((city, i) => (
+              <button
+                key={`${city.name}-${city.lat}-${i}`}
+                id={`city-option-${i}`}
+                type="button"
+                role="option"
+                aria-selected={
+                  selectedCity?.name === city.name &&
+                  selectedCity?.lat === city.lat
+                }
+                data-active={i === activeIndex}
+                onClick={() => handleSelect(city)}
+                className="w-full border-b border-star-dust-700/50 px-4 py-3 text-left transition-colors last:border-0 hover:bg-star-dust-800/50 data-[active=true]:bg-star-dust-800/50"
+              >
+                <div className="text-sm font-medium text-foreground">
+                  {city.name}
+                </div>
+                <div className="text-[10px] tracking-wide text-muted-foreground uppercase">
+                  {city.country_code} · {city.timezone}
+                </div>
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
