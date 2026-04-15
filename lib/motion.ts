@@ -99,5 +99,5 @@ export const scaleIn = {
  * `margin: "-80px"` dispara la animación 80px antes de que el
  * elemento entre completamente al viewport, creando un efecto anticipado.
  */
-export const viewportOnce = { once: true, margin: "-200px 0px -50px 0px" }
+export const viewportOnce = { once: false, margin: "-20px 0px -200px 0px" }
 export const viewportOnceFooter = { once: true, margin: "-40px" }

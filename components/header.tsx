@@ -44,7 +44,7 @@ export function Header() {
     >
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-5xl items-center justify-between py-4"
+        className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4"
       >
         <Link href="/">
           <Image src="/logo.png" alt="Logo" width={100} height={100} />

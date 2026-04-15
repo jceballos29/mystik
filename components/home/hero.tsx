@@ -39,7 +39,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-linear-to-b from-background/50 to-background"></div>
       <motion.div
         style={{ y, opacity }}
-        className="z-10 mx-auto max-w-7xl py-32 sm:py-48 lg:p-56"
+        className="z-10 mx-auto max-w-7xl px-6 py-32 sm:px-10 sm:py-48 lg:p-56"
       >
         <motion.div
           variants={staggerContainer}
@@ -57,7 +57,7 @@ export function Hero() {
           </motion.div>
           <motion.h1
             variants={staggerItem}
-            className="mb-6 text-center font-title text-4xl font-bold tracking-wider text-balance text-primary lg:text-6xl"
+            className="mb-6 text-center font-title text-4xl font-bold tracking-wider text-balance text-primary md:text-5xl lg:text-6xl"
           >
             Discover what the stars have in store for you
           </motion.h1>
@@ -74,7 +74,7 @@ export function Hero() {
             className="flex flex-col justify-center gap-4 sm:flex-row"
           >
             <Button
-              className="hover:bg-gold-dim rounded-none bg-primary px-8 text-xs font-bold tracking-widest text-primary-foreground uppercase cursor-pointer transition-colors"
+              className="hover:bg-gold-dim cursor-pointer rounded-none bg-primary px-8 text-xs font-bold tracking-widest text-primary-foreground uppercase transition-colors"
               onClick={() =>
                 document
                   .getElementById("services")
@@ -88,7 +88,7 @@ export function Hero() {
           {/* Scroll indicator */}
           <motion.div
             variants={fadeIn}
-            className="mt-20 flex flex-col items-center gap-2"
+            className="mt-12 flex flex-col items-center gap-2 sm:mt-20"
           >
             <span className="text-xs tracking-[0.25em] text-muted-foreground uppercase">
               Scroll
