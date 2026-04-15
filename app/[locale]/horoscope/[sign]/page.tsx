@@ -73,7 +73,7 @@ export default async function ZodiacSignPage({
   const signIndex = zodiacSigns.findIndex((z) => z.id === sign)
   const nextSign = zodiacSigns[(signIndex + 1) % zodiacSigns.length]
 
-  const result = await getDailyHoroscope(sign)
+  const result = await getDailyHoroscope(sign, locale)
   const horoscope = result.error ? null : result.data
   const meta = result.error ? null : result.meta
 

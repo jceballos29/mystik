@@ -16,6 +16,7 @@ import {
   type SynastryApiPayload,
   type SynastryApiResponse,
 } from "@/lib/validations/synastry.schema"
+import { translateSynastryResponse } from "@/lib/translate/synastry"
 
 // --- Tipos e Interfaces ---
 
@@ -67,7 +68,8 @@ async function fetchSynastryFromAPI(payload: SynastryApiPayload) {
  * @returns Reporte de sinastría con resumen, scores y aspectos, o un error descriptivo.
  */
 export async function calculateSynastry(
-  payload: SynastryApiPayload
+  payload: SynastryApiPayload,
+  locale: string = "en"
 ): Promise<SynastryResult> {
   const validation = synastryApiPayloadSchema.safeParse(payload)
 
@@ -88,6 +90,15 @@ export async function calculateSynastry(
         parsed.error.issues
       )
       return { error: "The API schema has changed." }
+    }
+
+    if (locale !== "en") {
+      try {
+        const translated = await translateSynastryResponse(parsed.data, locale)
+        return { data: translated }
+      } catch (err) {
+        console.error("[calculateSynastry] Translation failed:", err)
+      }
     }
 
     return { data: parsed.data }

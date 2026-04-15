@@ -74,8 +74,10 @@ function ErrorState({ message }: { message: string }) {
 
 export default async function SynastryPage({
   searchParams,
+  params,
 }: SynastryPageProps) {
   const { q } = await searchParams
+  const { locale } = await params
 
   const payload = decodePayload(q)
 
@@ -85,7 +87,7 @@ export default async function SynastryPage({
     )
   }
 
-  const result = await calculateSynastry(payload)
+  const result = await calculateSynastry(payload, locale)
 
   if (!result.data) {
     return (

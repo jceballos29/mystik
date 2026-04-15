@@ -16,6 +16,7 @@ import {
   type HoroscopeMeta,
 } from "@/lib/validations/horoscope.schema"
 import { isValidSign } from "@/lib/zodiac-signs"
+import { translateHoroscopeData } from "@/lib/translate/horoscope"
 
 // --- Tipos e Interfaces ---
 
@@ -54,6 +55,7 @@ export type HoroscopeResult = HoroscopeSuccess | HoroscopeError
  */
 export async function getDailyHoroscope(
   sign: string,
+  locale: string = "en",
   date: string = "today"
 ): Promise<HoroscopeResult> {
   const slug = sign.toLowerCase()
@@ -86,6 +88,18 @@ export async function getDailyHoroscope(
         parsed.error.issues
       )
       return { error: "The API schema has changed." }
+    }
+
+    if (locale !== "en") {
+      try {
+        const translated = await translateHoroscopeData(
+          parsed.data.data,
+          locale
+        )
+        return { data: translated, meta: parsed.data.meta }
+      } catch (err) {
+        console.error("[getDailyHoroscope] Translation failed:", err)
+      }
     }
 
     return { data: parsed.data.data, meta: parsed.data.meta }
@@ -159,7 +173,8 @@ async function fetchPersonalizedHoroscope(payload: {
  * @returns Datos personalizados del horóscopo con tránsitos, o un error descriptivo.
  */
 export async function getPersonalizedHoroscope(
-  birth: BirthInput
+  birth: BirthInput,
+  locale: string = "en"
 ): Promise<HoroscopeResult> {
   if (birth.latitude == null || birth.longitude == null) {
     return { error: "Birth location is required for a personalized reading." }
@@ -212,6 +227,18 @@ export async function getPersonalizedHoroscope(
         parsed.error.issues
       )
       return { error: "The API schema has changed." }
+    }
+
+    if (locale !== "en") {
+      try {
+        const translated = await translateHoroscopeData(
+          parsed.data.data,
+          locale
+        )
+        return { data: translated, meta: parsed.data.meta }
+      } catch (err) {
+        console.error("[getPersonalizedHoroscope] Translation failed:", err)
+      }
     }
 
     return { data: parsed.data.data, meta: parsed.data.meta }

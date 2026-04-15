@@ -28,7 +28,7 @@ import {
   MapPin,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams, useParams } from "next/navigation"
 import { Suspense, useEffect, useMemo, useState } from "react"
 
 const TRANSIT_STAGGER_MS = 80
@@ -222,6 +222,7 @@ function PersonalizeContent() {
   const t = useTranslations("horoscope")
   const searchParams = useSearchParams()
   const router = useRouter()
+  const { locale } = useParams<{ locale: string }>()
 
   interface BirthParams {
     year?: number
@@ -280,16 +281,19 @@ function PersonalizeContent() {
 
     let cancelled = false
     ;(async () => {
-      const result = await getPersonalizedHoroscope({
-        year: Number(year!),
-        month: Number(month!),
-        day: Number(day!),
-        hour: Number(hour ?? 12),
-        minute: Number(min ?? 0),
-        latitude: Number(lat!),
-        longitude: Number(lon!),
-        city: city ?? "Unknown",
-      })
+      const result = await getPersonalizedHoroscope(
+        {
+          year: Number(year!),
+          month: Number(month!),
+          day: Number(day!),
+          hour: Number(hour ?? 12),
+          minute: Number(min ?? 0),
+          latitude: Number(lat!),
+          longitude: Number(lon!),
+          city: city ?? "Unknown",
+        },
+        locale
+      )
       if (cancelled) return
       if (result.error) {
         setApiError(result.error)
@@ -302,7 +306,19 @@ function PersonalizeContent() {
     return () => {
       cancelled = true
     }
-  }, [paramError, retryKey, year, month, day, hour, min, lat, lon, city])
+  }, [
+    paramError,
+    retryKey,
+    year,
+    month,
+    day,
+    hour,
+    min,
+    lat,
+    lon,
+    city,
+    locale,
+  ])
 
   const handleRetry = () => {
     setLoading(true)
