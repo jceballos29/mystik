@@ -1,3 +1,10 @@
+/**
+ * @module app/loading
+ *
+ * Loading global del App Router. Se muestra durante la navegación
+ * entre rutas mientras se carga el nuevo segmento. Renderiza un
+ * spinner centrado con el header visible.
+ */
 import { Header } from "@/components/header"
 import { Section } from "@/components/section"
 

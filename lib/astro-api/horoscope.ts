@@ -1,3 +1,10 @@
+/**
+ * @module astro-api/horoscope
+ *
+ * Server Actions para obtener horóscopos diarios (por signo y personalizados).
+ * Cada función valida su entrada, invoca la API externa a través de `astroFetch`,
+ * y valida la respuesta contra esquemas Zod antes de retornar datos tipados.
+ */
 "use server"
 
 import { cacheLife } from "next/cache"
@@ -10,20 +17,41 @@ import {
 } from "@/lib/validations/horoscope.schema"
 import { isValidSign } from "@/lib/zodiac-signs"
 
+// --- Tipos e Interfaces ---
+
+/** Resultado exitoso de una petición de horóscopo. */
 interface HoroscopeSuccess {
   data: HoroscopeData
   meta: HoroscopeMeta
   error?: never
 }
 
+/** Resultado fallido de una petición de horóscopo. */
 interface HoroscopeError {
   data?: never
   meta?: never
   error: string
 }
 
+/**
+ * Unión discriminada que representa el resultado de cualquier operación
+ * de horóscopo. Permite pattern matching seguro en el cliente:
+ * `if (result.error) { ... } else { result.data }`
+ */
 export type HoroscopeResult = HoroscopeSuccess | HoroscopeError
 
+// --- Acciones de Servidor ---
+
+/**
+ * Obtiene el horóscopo diario para un signo zodiacal específico.
+ *
+ * La respuesta se cachea por 1 hora usando ISR con tags dinámicos
+ * basados en el signo y la fecha, permitiendo revalidación selectiva.
+ *
+ * @param sign - Slug del signo zodiacal (ej. "aries", "leo").
+ * @param date - Fecha en formato `YYYY-MM-DD` o `"today"` (por defecto).
+ * @returns Datos del horóscopo con metadata, o un error descriptivo.
+ */
 export async function getDailyHoroscope(
   sign: string,
   date: string = "today"
@@ -67,8 +95,18 @@ export async function getDailyHoroscope(
   }
 }
 
+// --- Horóscopo Personalizado ---
+
+/**
+ * Año mínimo aceptado para la fecha de nacimiento.
+ * Previene datos astrológicos fuera de las efemérides confiables.
+ */
 const MIN_BIRTH_YEAR = 1900
 
+/**
+ * Datos de nacimiento requeridos para generar una lectura personalizada.
+ * Se transmiten desde el formulario del cliente codificados en Base64URL.
+ */
 export interface BirthInput {
   year: number
   month: number
@@ -80,6 +118,15 @@ export interface BirthInput {
   city: string
 }
 
+/**
+ * Invocación cacheada a la API de horóscopo personalizado.
+ * Se separó en una función interna para que `"use cache"` opere
+ * a nivel de esta función específica, sin afectar la validación
+ * previa que no debe cachearse.
+ *
+ * @param payload - Datos de nacimiento y fecha objetivo.
+ * @returns Respuesta cruda de la API (sin validar).
+ */
 async function fetchPersonalizedHoroscope(payload: {
   birth: {
     year: number
@@ -101,6 +148,16 @@ async function fetchPersonalizedHoroscope(payload: {
   })
 }
 
+/**
+ * Genera un horóscopo diario personalizado basado en la carta natal del usuario.
+ *
+ * Realiza validaciones de rango en cada campo de nacimiento antes de
+ * invocar la API. La respuesta se cachea a nivel de función para evitar
+ * cálculos repetidos con los mismos datos de nacimiento.
+ *
+ * @param birth - Datos completos de nacimiento incluyendo coordenadas geográficas.
+ * @returns Datos personalizados del horóscopo con tránsitos, o un error descriptivo.
+ */
 export async function getPersonalizedHoroscope(
   birth: BirthInput
 ): Promise<HoroscopeResult> {

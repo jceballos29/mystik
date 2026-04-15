@@ -1,16 +1,29 @@
+/**
+ * @module components/section-title
+ *
+ * Título de sección reutilizable con icono, subtítulo y descripción.
+ * Soporta alineación configurable (center, left, right) mediante
+ * class-variance-authority (CVA).
+ */
 import { cn } from "@/lib/utils"
 import { cva, VariantProps } from "class-variance-authority"
 import Image from "next/image"
 import { Typography } from "./ui/typography"
 
+/** Props del componente SectionTitle. */
 interface SectionTitleProps {
+  /** Ruta de la imagen decorativa. Fallback: `/icon.png`. */
   image?: string
+  /** Texto del subtítulo (H2). */
   subtitle: string
+  /** Descripción opcional debajo del subtítulo. */
   description?: string
   className?: string
+  /** Alineación del bloque: center (default), left o right. */
   position?: "center" | "left" | "right"
 }
 
+/** Variantes de alineación para el contenedor del título. */
 const sectionTitleVariants = cva("mb-20 flex flex-col", {
   variants: {
     position: {
@@ -24,6 +37,10 @@ const sectionTitleVariants = cva("mb-20 flex flex-col", {
   },
 })
 
+/**
+ * Título de sección con icono decorativo, heading H2 y descripción opcional.
+ * Usa CVA para manejar las variantes de alineación de forma declarativa.
+ */
 export function SectionTitle({
   image,
   subtitle,

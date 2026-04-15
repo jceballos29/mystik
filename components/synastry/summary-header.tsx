@@ -1,3 +1,11 @@
+/**
+ * @module components/synastry/summary-header
+ *
+ * Cabecera del reporte de sinastría que muestra el arquetipo de la relación,
+ * el puntaje general con anillo SVG animado, los datos de ambas personas,
+ * la narrativa del resumen y los "bands" interpretativos (Bond Tone,
+ * Core Dynamic, Watch For).
+ */
 "use client"
 
 import { motion } from "framer-motion"

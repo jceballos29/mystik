@@ -1,5 +1,16 @@
+/**
+ * @module zodiac-signs
+ *
+ * Catálogo estático de los 12 signos zodiacales con sus rangos de fechas
+ * e imágenes asociadas. Actúa como fuente de verdad para validación de slugs,
+ * generación de rutas estáticas y renderizado de la grilla de signos.
+ */
+
 import type { ZodiacSign } from "./types"
 
+// --- Catálogo de Signos ---
+
+/** Lista completa y ordenada de los 12 signos zodiacales. */
 export const zodiacSigns: ZodiacSign[] = [
   {
     id: "aries",
@@ -183,12 +194,29 @@ export const zodiacSigns: ZodiacSign[] = [
   },
 ]
 
+// --- Validación y Búsqueda ---
+
+/** Lista plana de slugs válidos, derivada del catálogo para búsquedas O(n) rápidas. */
 export const VALID_SIGN_SLUGS = zodiacSigns.map((s) => s.id)
 
+/**
+ * Verifica si un slug corresponde a un signo zodiacal válido.
+ * Se utiliza en las Server Actions como primera línea de defensa
+ * antes de hacer peticiones a la API externa.
+ *
+ * @param slug - Slug a validar (ej. "aries", "leo").
+ * @returns `true` si el slug existe en el catálogo.
+ */
 export function isValidSign(slug: string): boolean {
   return VALID_SIGN_SLUGS.includes(slug)
 }
 
+/**
+ * Busca un signo zodiacal por su slug.
+ *
+ * @param slug - Identificador único del signo.
+ * @returns Objeto `ZodiacSign` completo, o `undefined` si no se encuentra.
+ */
 export function getSign(slug: string): ZodiacSign | undefined {
   return zodiacSigns.find((s) => s.id === slug)
 }

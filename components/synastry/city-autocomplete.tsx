@@ -1,3 +1,11 @@
+/**
+ * @module components/synastry/city-autocomplete
+ *
+ * Campo de autocompletado para búsqueda de ciudades con dropdown,
+ * navegación por teclado (↑/↓/Enter/Esc) y feedback visual de
+ * estados (loading, error, sin resultados, ciudad seleccionada).
+ * Usa el hook `useCitySearch` para la lógica de búsqueda con debounce.
+ */
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"

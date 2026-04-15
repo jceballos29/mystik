@@ -1,3 +1,10 @@
+/**
+ * @module components/zodiac-sign-card
+ *
+ * Tarjeta visual de un signo zodiacal usada en la grilla del landing.
+ * Muestra la imagen del signo, su nombre y el rango de fechas.
+ * Incluye una animación de escala + rotación al hacer hover.
+ */
 "use client"
 
 import Image from "next/image"
@@ -6,11 +13,21 @@ import { Card, CardContent } from "./ui/card"
 import type { ZodiacSign } from "@/lib/types"
 import { motion } from "framer-motion"
 
+/** Props del componente ZodiacSignCard. */
 interface ZodiacSignCardProps {
+  /** Datos completos del signo zodiacal. */
   sign: ZodiacSign
+  /** Si la tarjeta está actualmente en hover (controlado por el padre). */
   hovered: boolean
 }
 
+/**
+ * Tarjeta de signo zodiacal con animación de hover controlada externamente.
+ *
+ * El estado `hovered` se gestiona desde el componente padre (`Horoscope`)
+ * para sincronizar la animación con el hover del contenedor `motion.div`,
+ * permitiendo que la animación de la imagen sea más fluida.
+ */
 export function ZodiacSignCard({ sign, hovered }: ZodiacSignCardProps) {
   const { start, end } = sign.date
   const dateLabel = `${start.month} ${start.day} - ${end.month} ${end.day}`

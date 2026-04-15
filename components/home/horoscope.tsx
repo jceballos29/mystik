@@ -1,6 +1,19 @@
+/**
+ * @module components/home/horoscope
+ *
+ * Sección del landing que muestra la grilla de 12 signos zodiacales.
+ * Cada tarjeta enlaza a `/horoscope/[sign]`. El estado de hover
+ * se gestiona aquí para sincronizar la animación de la imagen del signo
+ * con el hover del contenedor `motion.div`.
+ */
 "use client"
 
-import { fadeUp, staggerContainer, staggerItem, viewportOnce } from "@/lib/motion"
+import {
+  fadeUp,
+  staggerContainer,
+  staggerItem,
+  viewportOnce,
+} from "@/lib/motion"
 import { zodiacSigns } from "@/lib/zodiac-signs"
 import { motion } from "framer-motion"
 import Image from "next/image"
@@ -9,7 +22,6 @@ import { ZodiacSignCard } from "../zodiac-sign-card"
 import { useState } from "react"
 
 export function Horoscope() {
-
   const [hovered, setHovered] = useState<string | null>(null)
 
   return (
@@ -56,13 +68,13 @@ export function Horoscope() {
               onHoverEnd={() => setHovered(null)}
               whileHover={{ y: -6, transition: { duration: 0.22 } }}
             >
-            <Link
-              href={`/horoscope/${sign.id}`}
-              key={sign.id}
-              className="w-full"
-            >
-              <ZodiacSignCard hovered={hovered === sign.name} sign={sign} />
-            </Link>
+              <Link
+                href={`/horoscope/${sign.id}`}
+                key={sign.id}
+                className="w-full"
+              >
+                <ZodiacSignCard hovered={hovered === sign.name} sign={sign} />
+              </Link>
             </motion.div>
           ))}
         </motion.div>

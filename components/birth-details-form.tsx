@@ -1,3 +1,13 @@
+/**
+ * @module components/birth-details-form
+ *
+ * Formulario para recopilar datos de nacimiento del usuario
+ * y generar una lectura de horóscopo personalizada.
+ *
+ * Al enviar, codifica los datos en Base64URL y navega a
+ * `/horoscope/personalize?q={encoded}`, donde se invoca
+ * la Server Action `getPersonalizedHoroscope()`.
+ */
 "use client"
 
 import { useRouter } from "next/navigation"
@@ -9,6 +19,16 @@ import type { CityResult } from "@/lib/validations/geo.schema"
 import { CityAutocomplete } from "@/components/synastry/city-autocomplete"
 import { encodeBase64Url } from "@/lib/utils"
 
+// --- Esquema de Validación ---
+
+/**
+ * Esquema Zod local para el formulario de datos de nacimiento.
+ *
+ * Se define inline (no en `lib/validations/`) porque es específico
+ * de este componente y no se reutiliza en otras partes de la aplicación.
+ * Incluye un refinamiento que verifica que se haya seleccionado una
+ * ciudad del autocomplete antes de permitir el envío.
+ */
 const birthSchema = z
   .object({
     date: z.string().min(1, "Birth date is required"),
@@ -30,8 +50,20 @@ const birthSchema = z
     path: ["city"],
   })
 
+/** Tipo inferido de los valores del formulario. */
 type BirthFormValues = z.infer<typeof birthSchema>
 
+// --- Componente ---
+
+/**
+ * Formulario de datos de nacimiento para horóscopo personalizado.
+ *
+ * Características:
+ * - Toggle "I don't know" para la hora de nacimiento (usa 12:00 como fallback)
+ * - Autocomplete de ciudad con geocodificación en tiempo real
+ * - Validación con Zod vía zodResolver
+ * - Codificación Base64URL del payload para transmisión por query string
+ */
 export function BirthDetailsForm() {
   const router = useRouter()
 
@@ -51,8 +83,13 @@ export function BirthDetailsForm() {
     },
   })
 
+  /** Observa el estado del toggle de hora desconocida para ajustar la UI. */
   const timeUnknown = useWatch({ control, name: "timeUnknown" })
 
+  /**
+   * Transforma los valores del formulario al formato de query string
+   * y navega a la página de lectura personalizada.
+   */
   const onSubmit = (values: BirthFormValues) => {
     if (!values.city) return
 

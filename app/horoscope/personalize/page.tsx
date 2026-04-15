@@ -1,3 +1,15 @@
+/**
+ * @module app/horoscope/personalize/page
+ *
+ * Página de lectura personalizada basada en la carta natal del usuario.
+ * Es un Client Component que decodifica los datos de nacimiento del
+ * query string (`?q=base64url`), invoca `getPersonalizedHoroscope()`
+ * y renderiza el resultado con puntajes, tránsitos y recomendaciones.
+ *
+ * Incluye estados de carga (skeleton), error (con retry) y el
+ * componente `TransitCard` para mostrar tránsitos planetarios
+ * individuales con guía expandible.
+ */
 "use client"
 
 import { ScoreBar } from "@/components/horoscope/score-bar"
@@ -636,7 +648,6 @@ function PersonalizeContent() {
 export default function PersonalizePage() {
   return (
     <main className="min-h-svh">
-
       <Section
         id="personalize-hero"
         className="bg-background bg-[url('/horoscope-daily-hero.jpg')] bg-cover bg-center"

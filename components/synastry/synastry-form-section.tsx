@@ -1,3 +1,13 @@
+/**
+ * @module components/synastry/synastry-form-section
+ *
+ * Formulario de sinastría que recopila los datos de nacimiento de dos personas.
+ * Implementa un flujo de dos pasos (Persona A → Persona B) con validación
+ * progresiva usando React Hook Form + ZodResolver.
+ *
+ * Al enviar, construye el payload de la API, lo codifica en Base64URL
+ * y navega a `/synastry?q={encoded}` para generar el reporte.
+ */
 "use client"
 
 import { useState, useTransition } from "react"
@@ -24,6 +34,21 @@ import {
   encodeSynastryPayload,
 } from "@/lib/synastry-form-utils"
 
+// --- Componente Principal ---
+
+/**
+ * Formulario de sinastría con navegación por pasos.
+ *
+ * Flujo de interacción:
+ * 1. El usuario completa los datos de la Persona A y presiona "Next Person"
+ * 2. Se validan solo los campos de A con `trigger()` antes de avanzar
+ * 3. El usuario completa los datos de la Persona B y presiona "Access report"
+ * 4. Se valida el formulario completo con ZodResolver
+ * 5. Se construye el payload, se codifica y se navega a /synastry
+ *
+ * Se usa `useTransition` para manejar la navegación con estado de carga
+ * sin bloquear la UI principal.
+ */
 export function SynastryFormSection() {
   const router = useRouter()
   const [step, setStep] = useState<1 | 2>(1)
@@ -40,6 +65,7 @@ export function SynastryFormSection() {
     defaultValues: { a: emptySynastryPerson(), b: emptySynastryPerson() },
   })
 
+  /** Construye el payload, lo codifica y navega a la página de resultados. */
   const onSubmit = (values: SynastryFormValues) => {
     const payload = buildSynastryPayload(values)
     const encoded = encodeSynastryPayload(payload)
@@ -48,10 +74,12 @@ export function SynastryFormSection() {
     })
   }
 
+  /** Si hay errores en Persona A estando en el paso 2, retrocede automáticamente. */
   const onInvalid = (fieldErrors: FieldErrors<SynastryFormValues>) => {
     if (fieldErrors.a && step === 2) setStep(1)
   }
 
+  /** Valida solo los campos de Persona A antes de avanzar al paso 2. */
   const handleNext = async () => {
     const valid = await trigger(["a.date", "a.time", "a.location"])
     if (valid) setStep(2)
@@ -134,7 +162,7 @@ export function SynastryFormSection() {
             type="button"
             variant="outline"
             onClick={handleNext}
-            className="border-star-dust-700 hover:border-koromiko-500/50 w-full"
+            className="w-full border-star-dust-700 hover:border-koromiko-500/50"
           >
             Next Person →
           </Button>
@@ -153,6 +181,18 @@ export function SynastryFormSection() {
   )
 }
 
+// --- Subcomponente de Entrada por Persona ---
+
+/**
+ * Campos de entrada para una persona (A o B) dentro del formulario de sinastría.
+ * Renderiza nombre, fecha de nacimiento, hora y selector de ciudad.
+ * Se anima con Framer Motion al cambiar de paso.
+ *
+ * @param person - Identificador del formulario: "a" o "b".
+ * @param register - Función `register` de React Hook Form.
+ * @param control - Objeto `Control` para campos controlados (Controller).
+ * @param errors - Errores de validación del formulario completo.
+ */
 function PersonInput({
   person,
   register,

@@ -1,22 +1,30 @@
+/**
+ * @module components/footer
+ *
+ * Footer global de la aplicación con logo, información institucional,
+ * enlaces de navegación y créditos. Utiliza animaciones staggered
+ * de Framer Motion para entrada progresiva al entrar al viewport.
+ */
 "use client"
 
-import { motion } from "framer-motion"
 import { Separator } from "@/components/ui/separator"
 import {
   staggerContainer,
   staggerItem,
-  fadeUp,
-  viewportOnce,
+  viewportOnce
 } from "@/lib/motion"
-import Link from "next/link"
+import { motion } from "framer-motion"
 import Image from "next/image"
+import Link from "next/link"
 
+/** Enlaces de navegación del footer que apuntan a las secciones del landing. */
 const navLinks = [
   { label: "Personalized Horoscope", href: "#personalized" },
   { label: "Daily Horoscope", href: "#horoscope" },
   { label: "Synastry", href: "#synastry" },
 ]
 
+/** Footer principal con información institucional, navegación y créditos. */
 export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-border bg-background">
@@ -81,7 +89,11 @@ export function Footer() {
           className="flex flex-col items-center justify-between gap-4 sm:flex-row"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{
+            duration: 0.6,
+            delay: 0.4,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
         >
           <p className="text-xs text-muted-foreground">
             &copy; 2026 Mystik. All rights reserved.
@@ -90,16 +102,16 @@ export function Footer() {
             Astrological guidance for the modern seeker.
           </p>
           <p className="text-xs text-muted-foreground">
-          Powered by{" "}
-          <a
-            href="https://freeastroapi.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline underline-offset-2 transition-colors hover:text-koromiko-400"
-          >
-            FreeAstroAPI.com
-          </a>
-        </p>
+            Powered by{" "}
+            <a
+              href="https://freeastroapi.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 transition-colors hover:text-koromiko-400"
+            >
+              FreeAstroAPI.com
+            </a>
+          </p>
         </motion.div>
       </div>
     </footer>

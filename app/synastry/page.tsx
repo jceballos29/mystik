@@ -1,3 +1,15 @@
+/**
+ * @module app/synastry/page
+ *
+ * Página del reporte de sinastría (SSR con `searchParams`).
+ * Decodifica el payload Base64URL del query string, lo valida con
+ * `synastryApiPayloadSchema`, invoca `calculateSynastry()` y
+ * renderiza las 4 secciones del reporte: SummaryHeader, DomainScores,
+ * StrengthsChallenges y AspectExplorer.
+ *
+ * Incluye protección contra payloads excesivamente largos (> 2048 chars)
+ * y validación Zod antes de enviar a la API.
+ */
 import type { Metadata } from "next"
 import Link from "next/link"
 
@@ -8,7 +20,7 @@ import { StrengthsChallenges } from "@/components/synastry/strengths-challenges"
 import { SummaryHeader } from "@/components/synastry/summary-header"
 import { Typography } from "@/components/ui/typography"
 import { calculateSynastry } from "@/lib/astro-api/synastry"
-import { decodeBase64Url, formatLocalDate } from "@/lib/utils"
+import { decodeBase64Url } from "@/lib/utils"
 import {
   synastryApiPayloadSchema,
   type SynastryApiPayload,
@@ -84,7 +96,6 @@ export default async function SynastryPage({
 
   return (
     <main className="min-h-svh">
-
       <Section
         id="synastry-hero"
         className="bg-background bg-[url('/hero.jpg')] bg-cover bg-center"

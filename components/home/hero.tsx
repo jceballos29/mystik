@@ -1,3 +1,11 @@
+/**
+ * @module components/home/hero
+ *
+ * Sección hero del landing con imagen de fondo a pantalla completa,
+ * efecto parallax basado en scroll (Framer Motion `useTransform`)
+ * y animaciones staggered de entrada para badge, título, CTA y
+ * un indicador de scroll animado.
+ */
 "use client"
 
 import { fadeIn, staggerContainer, staggerItem } from "@/lib/motion"

@@ -1,3 +1,11 @@
+/**
+ * @module components/synastry/strengths-challenges
+ *
+ * Vista de dos columnas que separa los aspectos de la sinastría en
+ * fortalezas (supportive) y desafíos (challenging). Usa `mapKeyToAspect`
+ * para resolver las keys del resumen a aspectos completos. Al hacer click
+ * en un aspecto, abre el `RitualDrawer` con el detalle.
+ */
 "use client"
 
 import { useMemo, useState } from "react"

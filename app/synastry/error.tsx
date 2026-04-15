@@ -1,3 +1,9 @@
+/**
+ * @module app/synastry/error
+ *
+ * Error boundary para la ruta de sinastría. Redirige al usuario
+ * a `/#synastry` (formulario) para reintentar la operación.
+ */
 "use client"
 
 import { useEffect } from "react"

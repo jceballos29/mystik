@@ -1,8 +1,28 @@
+/**
+ * @module components/synastry/synastry-utils
+ *
+ * Funciones auxiliares y constantes de presentación para los componentes
+ * de sinastría. Centralizan la lógica de clasificación de polaridad,
+ * normalización de puntajes y mapeo de colores/clases por dominio.
+ */
+
 import type {
   SynastryAspect,
   SynastryDomain,
 } from "@/lib/validations/synastry.schema"
 
+// --- Clasificación de Polaridad ---
+
+/**
+ * Clasifica un puntaje de polaridad en una de tres categorías.
+ *
+ * Los umbrales (±0.35) se eligieron para que los aspectos con
+ * influencia muy débil se clasifiquen como "balanced" en vez de
+ * forzar una dirección, mejorando la experiencia interpretativa.
+ *
+ * @param score - Puntaje de polaridad del aspecto (-1 a 1).
+ * @returns Categoría: "supportive" (≥ 0.35), "challenging" (≤ -0.35) o "balanced".
+ */
 export function getPolarityLean(
   score: number
 ): "supportive" | "challenging" | "balanced" {
@@ -11,6 +31,17 @@ export function getPolarityLean(
   return "balanced"
 }
 
+// --- Búsqueda de Aspectos ---
+
+/**
+ * Busca un aspecto por su key dentro de la lista completa.
+ * Se usa para resolver las referencias de `strengths` y `challenges`
+ * del resumen, que solo contienen keys, no aspectos completos.
+ *
+ * @param key - Key del aspecto a buscar.
+ * @param aspects - Lista completa de aspectos del reporte.
+ * @returns Aspecto encontrado o `undefined`.
+ */
 export function mapKeyToAspect(
   key: string,
   aspects: SynastryAspect[]
@@ -18,6 +49,14 @@ export function mapKeyToAspect(
   return aspects.find((a) => a.key === key)
 }
 
+// --- Etiquetas ---
+
+/**
+ * Convierte el identificador de intensidad a una etiqueta legible.
+ *
+ * @param strength - Identificador de intensidad (ej. "very_strong", "mild").
+ * @returns Etiqueta formateada (ej. "Very Strong", "Mild").
+ */
 export function strengthLabel(strength: string): string {
   const labels: Record<string, string> = {
     very_strong: "Very Strong",
@@ -29,10 +68,22 @@ export function strengthLabel(strength: string): string {
   return labels[strength] ?? strength
 }
 
+// --- Normalización ---
+
+/**
+ * Acota un valor numérico al rango 0–100.
+ * Previene desbordamientos visuales en barras de progreso SVG.
+ *
+ * @param value - Valor numérico a normalizar.
+ * @returns Valor acotado entre 0 y 100.
+ */
 export function normalizeScore(value: number): number {
   return Math.max(0, Math.min(100, value))
 }
 
+// --- Colores por Dominio ---
+
+/** Colores hexadecimales asignados a cada dominio de sinastría. */
 export const DOMAIN_COLOR_HEX: Record<SynastryDomain, string> = {
   romance: "#fb7185",
   communication: "#38bdf8",
@@ -42,10 +93,17 @@ export const DOMAIN_COLOR_HEX: Record<SynastryDomain, string> = {
   tension: "#fb923c",
 }
 
+/**
+ * Retorna el color hexadecimal asociado a un dominio.
+ *
+ * @param domain - Nombre del dominio.
+ * @returns Color hex del dominio, o gris por defecto si no se reconoce.
+ */
 export function domainColorHex(domain: string): string {
   return DOMAIN_COLOR_HEX[domain as SynastryDomain] ?? "#94a3b8"
 }
 
+/** Clases de Tailwind para badges de dominio (texto, borde, fondo). */
 export const DOMAIN_CLASSES: Record<SynastryDomain, string> = {
   romance: "text-rose-400 border-rose-400/30 bg-rose-400/10",
   communication: "text-sky-400 border-sky-400/30 bg-sky-400/10",
@@ -55,6 +113,12 @@ export const DOMAIN_CLASSES: Record<SynastryDomain, string> = {
   tension: "text-orange-400 border-orange-400/30 bg-orange-400/10",
 }
 
+/**
+ * Retorna las clases de Tailwind para un badge de dominio.
+ *
+ * @param domain - Nombre del dominio.
+ * @returns Clases CSS para texto, borde y fondo.
+ */
 export function domainClasses(domain: string): string {
   return (
     DOMAIN_CLASSES[domain as SynastryDomain] ??
@@ -62,6 +126,7 @@ export function domainClasses(domain: string): string {
   )
 }
 
+/** Etiquetas legibles para cada dominio de sinastría. */
 export const DOMAIN_LABELS: Record<SynastryDomain, string> = {
   romance: "Romance",
   communication: "Communication",
@@ -71,6 +136,12 @@ export const DOMAIN_LABELS: Record<SynastryDomain, string> = {
   tension: "Tension",
 }
 
+/**
+ * Retorna la etiqueta legible de un dominio.
+ *
+ * @param domain - Nombre del dominio.
+ * @returns Etiqueta con capitalización, o el nombre original si no se reconoce.
+ */
 export function domainLabel(domain: string): string {
   return DOMAIN_LABELS[domain as SynastryDomain] ?? domain
 }

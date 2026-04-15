@@ -1,3 +1,10 @@
+/**
+ * @module components/synastry/domain-scores
+ *
+ * Grilla de puntajes por dominio de sinastría (6 dominios) mostrados
+ * como anillos SVG circulares. Incluye tooltips con los "top drivers"
+ * (aspectos que más contribuyen al puntaje) que aparecen al hacer hover.
+ */
 "use client"
 
 import { motion } from "framer-motion"

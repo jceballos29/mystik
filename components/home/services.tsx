@@ -1,3 +1,11 @@
+/**
+ * @module components/home/services
+ *
+ * Sección del landing que muestra las tres ofertas principales de Mystik:
+ * Horóscopo Personalizado, Horóscopo Diario y Sinastría.
+ * Los servicios se definen como un array estático y se renderizan
+ * en una grilla 3-columnas con animaciones staggered.
+ */
 "use client"
 
 import { motion } from "framer-motion"

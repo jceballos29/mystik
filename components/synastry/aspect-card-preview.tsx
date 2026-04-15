@@ -1,3 +1,12 @@
+/**
+ * @module components/synastry/aspect-card-preview
+ *
+ * Tarjeta compacta que muestra un aspecto de sinastría con su título,
+ * etiqueta, badge de polaridad (supportive/challenging/balanced),
+ * intensidad y dominios afectados. Clickeable para abrir el detalle
+ * en `RitualDrawer`. Usa Framer Motion `layout` para animaciones
+ * suaves al filtrar/reordenar en el `AspectExplorer`.
+ */
 "use client"
 
 import { motion } from "framer-motion"

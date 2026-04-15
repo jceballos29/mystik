@@ -1,3 +1,9 @@
+/**
+ * @module components/home/about
+ *
+ * Sección "About" del landing que describe la misión de Mystik.
+ * Contenido estático con animación `fadeUp` al entrar al viewport.
+ */
 "use client"
 
 import { motion } from "framer-motion"

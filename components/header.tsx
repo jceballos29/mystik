@@ -1,3 +1,10 @@
+/**
+ * @module components/header
+ *
+ * Header global fijo con efecto de transparencia que transiciona
+ * a un fondo sólido con blur al hacer scroll. Usa Framer Motion
+ * para detectar la posición del scroll y animar la entrada.
+ */
 "use client"
 
 import Image from "next/image"
@@ -7,6 +14,14 @@ import { cn } from "@/lib/utils"
 import { useState } from "react"
 import { motion, useMotionValueEvent, useScroll } from "framer-motion"
 
+/**
+ * Header principal de la aplicación.
+ *
+ * Comportamiento visual:
+ * - **Transparente** cuando el scroll está en la parte superior (< 50px)
+ * - **Sólido con backdrop-blur** cuando el usuario ha scrolleado (≥ 50px)
+ * - Animación de entrada desde arriba al cargar la página
+ */
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
 

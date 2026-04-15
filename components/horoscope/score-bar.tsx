@@ -1,11 +1,26 @@
+/**
+ * @module components/horoscope/score-bar
+ *
+ * Barra de progreso horizontal que visualiza un puntaje de energía
+ * (0–100) con su etiqueta cualitativa y razón explicativa opcional.
+ * Se usa en las vistas de horóscopo diario y personalizado.
+ */
 import { getScoreLabel } from "@/lib/horoscope-utils"
 
+/** Props del componente ScoreBar. */
 interface ScoreBarProps {
+  /** Nombre de la dimensión (ej. "love", "career"). */
   label: string
+  /** Puntaje numérico de 0 a 100. */
   value: number
+  /** Texto explicativo del factor que influye en este puntaje. */
   reason?: string | null
 }
 
+/**
+ * Barra de progreso con etiqueta cualitativa y razón opcional.
+ * El ancho de la barra se anima via CSS `transition-all`.
+ */
 export function ScoreBar({ label, value, reason }: ScoreBarProps) {
   return (
     <div className="space-y-2">

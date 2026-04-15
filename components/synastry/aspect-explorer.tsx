@@ -1,3 +1,11 @@
+/**
+ * @module components/synastry/aspect-explorer
+ *
+ * Explorador interactivo de aspectos de sinastría con filtros por dominio,
+ * ordenamiento (por rank o intensidad) y expansión progresiva. Muestra
+ * un balance inicial de 3 supportive + 3 challenging, expandible al
+ * listado completo. Integra `RitualDrawer` para detalle de cada aspecto.
+ */
 "use client"
 
 import { useState, useMemo } from "react"

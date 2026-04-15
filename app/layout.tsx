@@ -1,3 +1,11 @@
+/**
+ * @module app/layout
+ *
+ * Layout raíz de la aplicación. Configura las fuentes tipográficas
+ * (El Messiri para títulos, Proza Libre para cuerpo), el provider
+ * de tema (dark-mode forzado), el componente de scroll-to-top,
+ * el header global y el footer. Envuelve todo el árbol de componentes.
+ */
 import type { Metadata } from "next"
 import { El_Messiri, Proza_Libre } from "next/font/google"
 

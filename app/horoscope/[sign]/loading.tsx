@@ -1,3 +1,10 @@
+/**
+ * @module app/horoscope/[sign]/loading
+ *
+ * Skeleton de carga específico para la página de horóscopo por signo.
+ * Simula la estructura visual de la página real con bloques pulsantes
+ * para minimizar el layout shift al cargar los datos.
+ */
 import { Header } from "@/components/header"
 import { Section } from "@/components/section"
 

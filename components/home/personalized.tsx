@@ -1,17 +1,24 @@
+/**
+ * @module components/home/personalized
+ *
+ * Sección del landing que promueve el horóscopo personalizado.
+ * Layout de dos columnas: imagen editorial a la izquierda y
+ * formulario de datos de nacimiento (`BirthDetailsForm`) a la derecha.
+ * Cada columna usa animaciones staggered independientes.
+ */
 "use client"
 
-import {
-  staggerContainer,
-  staggerItem,
-  viewportOnce
-} from "@/lib/motion"
+import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { BirthDetailsForm } from "../birth-details-form"
 
 export function Personalized() {
   return (
-    <section id="personalized" className="relative flex items-center justify-center overflow-hidden bg-background">
+    <section
+      id="personalized"
+      className="relative flex items-center justify-center overflow-hidden bg-background"
+    >
       <Image
         src="/hero.jpg"
         alt="Hero Image"

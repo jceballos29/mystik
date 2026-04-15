@@ -1,3 +1,15 @@
+/**
+ * @module app/horoscope/[sign]/page
+ *
+ * Página de horóscopo diario por signo zodiacal (SSG).
+ * Pre-renderiza las 12 rutas en build time con `generateStaticParams()`.
+ * Cada página muestra el hero con el nombre del signo, puntajes de energía
+ * (love, career, money, health), contexto cósmico (luna, aspectos),
+ * elementos de la suerte y recomendaciones do/don't.
+ *
+ * Los datos se obtienen via `getDailyHoroscope()` con revalidación ISR
+ * cada hora. Si la API falla, se renderiza un `ErrorState` inline.
+ */
 import { ScoreBar } from "@/components/horoscope/score-bar"
 import { Section } from "@/components/section"
 import { Typography } from "@/components/ui/typography"
@@ -68,7 +80,6 @@ export default async function ZodiacSignPage({
 
   return (
     <>
-
       <Section
         id="sign-hero"
         className="bg-background bg-[url('/horoscope-daily-hero.jpg')] bg-cover bg-center"

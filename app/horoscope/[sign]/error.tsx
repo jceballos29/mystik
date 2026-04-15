@@ -1,3 +1,11 @@
+/**
+ * @module app/horoscope/[sign]/error
+ *
+ * Error boundary para la ruta de horóscopo por signo.
+ * Captura errores no manejados y ofrece opciones de retry (re-render)
+ * y navegación al home. Loguea el error en consola con prefijo
+ * para trazabilidad en producción.
+ */
 "use client"
 
 import { useEffect } from "react"

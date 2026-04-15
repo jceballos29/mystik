@@ -1,3 +1,11 @@
+/**
+ * @module components/synastry/intensity-bars
+ *
+ * Indicador visual de intensidad de un aspecto representado como 5 barras
+ * verticales. El color varía según la polaridad (verde: supportive,
+ * rojo: challenging, dorado: balanced). Las barras rellenas se calculan
+ * a partir del valor absoluto del puntaje de polaridad.
+ */
 import { getPolarityLean } from "@/components/synastry/synastry-utils"
 
 interface IntensityBarsProps {

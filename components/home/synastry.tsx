@@ -1,3 +1,10 @@
+/**
+ * @module components/home/synastry
+ *
+ * Sección del landing que contiene el formulario de sinastría.
+ * Integra el componente `SynastryFormSection` dentro de un layout
+ * con imagen de fondo y overlay gradiente.
+ */
 "use client"
 
 import { fadeUp, viewportOnce } from "@/lib/motion"

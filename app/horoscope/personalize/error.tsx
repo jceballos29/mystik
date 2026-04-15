@@ -1,3 +1,10 @@
+/**
+ * @module app/horoscope/personalize/error
+ *
+ * Error boundary para la ruta de horóscopo personalizado.
+ * Captura errores no manejados (ej. fallo en decodificación de payload)
+ * y ofrece retry y navegación al home.
+ */
 "use client"
 
 import { useEffect } from "react"

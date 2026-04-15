@@ -1,3 +1,13 @@
+/**
+ * @module components/synastry/ritual-drawer
+ *
+ * Panel lateral (drawer) que muestra el detalle completo de un aspecto
+ * de sinastría. Incluye toggle entre perspectivas "supportive" y
+ * "challenging", barras de intensidad, badges de dominio y una nota
+ * interpretativa del puntaje de polaridad. Usa Radix UI Dialog
+ * como primitivo de accesibilidad y Framer Motion para la animación
+ * de entrada/salida lateral.
+ */
 "use client"
 
 import { useState } from "react"
