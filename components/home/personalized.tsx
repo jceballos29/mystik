@@ -8,14 +8,18 @@
  */
 "use client"
 
-import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion"
+import { fadeIn, staggerContainer, staggerItem, viewportOnce } from "@/lib/motion"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { BirthDetailsForm } from "../birth-details-form"
 
 export function Personalized() {
   return (
-    <section
+    <motion.section
+      variants={fadeIn}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportOnce}
       id="personalized"
       className="relative flex items-center justify-center overflow-hidden bg-background"
     >
@@ -85,6 +89,6 @@ export function Personalized() {
           </motion.div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }

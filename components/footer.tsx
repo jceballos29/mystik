@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator"
 import {
   staggerContainer,
   staggerItem,
-  viewportOnce
+  viewportOnceFooter
 } from "@/lib/motion"
 import { motion } from "framer-motion"
 import Image from "next/image"
@@ -19,9 +19,9 @@ import Link from "next/link"
 
 /** Enlaces de navegación del footer que apuntan a las secciones del landing. */
 const navLinks = [
-  { label: "Personalized Horoscope", href: "#personalized" },
-  { label: "Daily Horoscope", href: "#horoscope" },
-  { label: "Synastry", href: "#synastry" },
+  { label: "Personalized Horoscope", href: "personalized" },
+  { label: "Daily Horoscope", href: "horoscope" },
+  { label: "Synastry", href: "synastry" },
 ]
 
 /** Footer principal con información institucional, navegación y créditos. */
@@ -34,7 +34,7 @@ export function Footer() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={viewportOnce}
+          viewport={viewportOnceFooter}
         >
           <motion.div variants={staggerItem} className="col-span-2">
             <Link href="/">
@@ -68,14 +68,17 @@ export function Footer() {
               <ul className="space-y-3">
                 {navLinks.map((link) => (
                   <li key={link.label}>
-                    <motion.a
-                      href={link.href}
-                      className="inline-block text-sm text-muted-foreground transition-colors hover:text-primary"
+                    <motion.span
+                      className="inline-block text-sm text-muted-foreground transition-colors hover:text-primary cursor-pointer"
                       whileHover={{ x: 4 }}
                       transition={{ type: "spring", stiffness: 300 }}
+                      onClick={() => {
+                        const sectionId = link.href;
+                        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+                      }}
                     >
                       {link.label}
-                    </motion.a>
+                    </motion.span>
                   </li>
                 ))}
               </ul>

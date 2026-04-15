@@ -15,18 +15,21 @@ import Image from "next/image"
 
 const services = [
   {
+    id: 'personalized',
     image: "/aquarius.png",
     title: "Personalized Horoscope",
     description:
       "Transit-based insights calculated from your natal chart for a reading that is uniquely yours.",
   },
   {
+      id: 'horoscope',
     image: "/virgo.png",
     title: "Daily Horoscope",
     description:
       "Get today's cosmic forecast for your zodiac sign — love, career, money, and health.",
   },
   {
+      id: 'synastry',
     image: "/gemini.png",
     title: "Synastry",
     description:
@@ -50,12 +53,17 @@ export function Services() {
         >
           {services.map((service) => (
             <motion.div
-              key={service.title}
+              key={service.id}
               className="group block"
               variants={staggerItem}
               whileHover={{ y: -6, transition: { duration: 0.25 } }}
             >
-              <Card className="h-full rounded-none border-2 border-star-dust-700 bg-background transition-colors duration-300 hover:border-primary/50">
+              <Card className="h-full rounded-none border-2 border-star-dust-700 bg-background transition-colors duration-300 hover:border-primary/50"
+                onClick={() => {
+                  const sectionId = service.id === 'personalized' ? 'personalized' : service.id === 'horoscope' ? 'horoscope' : 'synastry';
+                  document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
                 <CardContent className="flex flex-col gap-4 p-8">
                   <figure className="mb-4 h-20 overflow-hidden">
                     <Image

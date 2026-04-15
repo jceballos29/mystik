@@ -7,7 +7,7 @@
  */
 "use client"
 
-import { fadeUp, viewportOnce } from "@/lib/motion"
+import { fadeUp, staggerContainer, viewportOnce } from "@/lib/motion"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { SynastryFormSection } from "../synastry/synastry-form-section"
@@ -50,9 +50,15 @@ export function Synastry() {
             </p>
           </div>
         </motion.div>
-        <div className="mx-auto max-w-2xl p-8 sm:p-12">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          className="mx-auto max-w-2xl p-8 sm:p-12"
+        >
           <SynastryFormSection />
-        </div>
+        </motion.div>
       </div>
     </section>
   )

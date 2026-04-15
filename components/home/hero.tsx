@@ -14,7 +14,6 @@ import Image from "next/image"
 import { useRef } from "react"
 import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
-import Link from "next/link"
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null)
@@ -75,10 +74,14 @@ export function Hero() {
             className="flex flex-col justify-center gap-4 sm:flex-row"
           >
             <Button
-              asChild
-              className="hover:bg-gold-dim rounded-none bg-primary px-8 text-xs font-bold tracking-widest text-primary-foreground uppercase"
+              className="hover:bg-gold-dim rounded-none bg-primary px-8 text-xs font-bold tracking-widest text-primary-foreground uppercase cursor-pointer transition-colors"
+              onClick={() =>
+                document
+                  .getElementById("services")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
             >
-              <Link href="#services">Explore Services</Link>
+              Explore Services
             </Button>
           </motion.div>
 
