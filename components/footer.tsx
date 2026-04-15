@@ -8,11 +8,7 @@
 "use client"
 
 import { Separator } from "@/components/ui/separator"
-import {
-  staggerContainer,
-  staggerItem,
-  viewportOnceFooter
-} from "@/lib/motion"
+import { staggerContainer, staggerItem, viewportOnceFooter } from "@/lib/motion"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
@@ -47,9 +43,9 @@ export function Footer() {
           </motion.div>
 
           <motion.div variants={staggerItem} className="col-span-2">
-            <h5 className="mb-4 text-xs font-semibold tracking-[0.2em] text-foreground uppercase">
+            <h3 className="mb-4 text-xs font-semibold tracking-[0.2em] text-foreground uppercase">
               Politécnico Internacional
-            </h5>
+            </h3>
             <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
               Colombia — Bogotá D.C.
             </p>
@@ -61,24 +57,32 @@ export function Footer() {
             </a>
           </motion.div>
           <motion.div variants={staggerItem}>
-            <h5 className="mb-4 text-xs font-semibold tracking-[0.2em] text-foreground uppercase">
+            <h3 className="mb-4 text-xs font-semibold tracking-[0.2em] text-foreground uppercase">
               Links
-            </h5>
+            </h3>
             <nav>
               <ul className="space-y-3">
                 {navLinks.map((link) => (
                   <li key={link.label}>
-                    <motion.span
-                      className="inline-block text-sm text-muted-foreground transition-colors hover:text-primary cursor-pointer"
+                    <motion.button
+                      type="button"
+                      className="inline-block cursor-pointer border-0 bg-transparent p-0 text-sm text-muted-foreground transition-colors hover:text-primary"
                       whileHover={{ x: 4 }}
                       transition={{ type: "spring", stiffness: 300 }}
                       onClick={() => {
-                        const sectionId = link.href;
-                        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+                        const sectionId = link.href
+                        const el = document.getElementById(sectionId)
+                        if (el) {
+                          const top =
+                            el.getBoundingClientRect().top +
+                            window.scrollY -
+                            100
+                          window.scrollTo({ top, behavior: "smooth" })
+                        }
                       }}
                     >
                       {link.label}
-                    </motion.span>
+                    </motion.button>
                   </li>
                 ))}
               </ul>

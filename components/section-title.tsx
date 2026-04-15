@@ -52,7 +52,8 @@ export function SectionTitle({
     <div className={cn(sectionTitleVariants({ position, className }))}>
       <Image
         src={image || "/icon.png"}
-        alt="Icon"
+        alt=""
+        aria-hidden="true"
         width={500}
         height={500}
         className="h-12 w-20"

@@ -15,21 +15,21 @@ import Image from "next/image"
 
 const services = [
   {
-    id: 'personalized',
+    id: "personalized",
     image: "/aquarius.png",
     title: "Personalized Horoscope",
     description:
       "Transit-based insights calculated from your natal chart for a reading that is uniquely yours.",
   },
   {
-      id: 'horoscope',
+    id: "horoscope",
     image: "/virgo.png",
     title: "Daily Horoscope",
     description:
       "Get today's cosmic forecast for your zodiac sign — love, career, money, and health.",
   },
   {
-      id: 'synastry',
+    id: "synastry",
     image: "/gemini.png",
     title: "Synastry",
     description:
@@ -41,6 +41,7 @@ export function Services() {
   return (
     <section
       id="services"
+      aria-label="Services"
       className="relative overflow-hidden bg-background py-24 select-none"
     >
       <div className="relative z-10 mx-auto max-w-5xl px-6">
@@ -58,30 +59,38 @@ export function Services() {
               variants={staggerItem}
               whileHover={{ y: -6, transition: { duration: 0.25 } }}
             >
-              <Card className="h-full rounded-none border-2 border-star-dust-700 bg-background transition-colors duration-300 hover:border-primary/50"
+              <button
+                type="button"
+                className="w-full cursor-pointer text-left"
                 onClick={() => {
-                  const sectionId = service.id === 'personalized' ? 'personalized' : service.id === 'horoscope' ? 'horoscope' : 'synastry';
-                  document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+                  const el = document.getElementById(service.id)
+                  if (el) {
+                    const top =
+                      el.getBoundingClientRect().top + window.scrollY - 100
+                    window.scrollTo({ top, behavior: "smooth" })
+                  }
                 }}
               >
-                <CardContent className="flex flex-col gap-4 p-8">
-                  <figure className="mb-4 h-20 overflow-hidden">
-                    <Image
-                      src={service.image}
-                      alt={service.title}
-                      width={80}
-                      height={80}
-                      className="h-full w-full object-contain"
-                    />
-                  </figure>
-                  <h3 className="text-center font-title text-xl font-semibold text-primary transition-colors group-hover:text-primary">
-                    {service.title}
-                  </h3>
-                  <p className="text-center text-sm leading-relaxed text-muted-foreground">
-                    {service.description}
-                  </p>
-                </CardContent>
-              </Card>
+                <Card className="h-full rounded-none border-2 border-star-dust-700 bg-background transition-colors duration-300 hover:border-primary/50">
+                  <CardContent className="flex flex-col gap-4 p-8">
+                    <figure className="mb-4 h-20 overflow-hidden">
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        width={80}
+                        height={80}
+                        className="h-full w-full object-contain"
+                      />
+                    </figure>
+                    <h3 className="text-center font-title text-xl font-semibold text-primary transition-colors group-hover:text-primary">
+                      {service.title}
+                    </h3>
+                    <p className="text-center text-sm leading-relaxed text-muted-foreground">
+                      {service.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </button>
             </motion.div>
           ))}
         </motion.div>

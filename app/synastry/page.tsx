@@ -53,7 +53,10 @@ function decodePayload(
 
 function ErrorState({ message }: { message: string }) {
   return (
-    <main className="flex min-h-svh flex-col items-center justify-center px-6 text-center">
+    <div
+      role="alert"
+      className="flex min-h-svh flex-col items-center justify-center px-6 text-center"
+    >
       <Typography.H2 className="mb-4">Something went wrong</Typography.H2>
       <p className="mb-8 max-w-md text-sm text-muted-foreground">{message}</p>
       <Link
@@ -62,7 +65,7 @@ function ErrorState({ message }: { message: string }) {
       >
         ← Try again
       </Link>
-    </main>
+    </div>
   )
 }
 

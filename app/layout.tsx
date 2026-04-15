@@ -55,8 +55,8 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <ScrollToTop />
+          <Header />
           <main className="min-h-screen bg-background text-foreground">
-            <Header />
             {children}
           </main>
           <Footer />

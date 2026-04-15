@@ -8,7 +8,12 @@
  */
 "use client"
 
-import { fadeIn, staggerContainer, staggerItem, viewportOnce } from "@/lib/motion"
+import {
+  fadeIn,
+  staggerContainer,
+  staggerItem,
+  viewportOnce,
+} from "@/lib/motion"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { BirthDetailsForm } from "../birth-details-form"
@@ -21,6 +26,7 @@ export function Personalized() {
       whileInView="visible"
       viewport={viewportOnce}
       id="personalized"
+      aria-label="Personalized Horoscope"
       className="relative flex items-center justify-center overflow-hidden bg-background"
     >
       <Image
@@ -65,7 +71,8 @@ export function Personalized() {
             <motion.div variants={staggerItem}>
               <Image
                 src={"/icon.png"}
-                alt="Icon"
+                alt=""
+                aria-hidden="true"
                 width={500}
                 height={500}
                 className="h-12 w-20"
