@@ -9,6 +9,7 @@
 
 import { motion } from "framer-motion"
 import { useMemo, useState } from "react"
+import { useTranslations } from "next-intl"
 
 import {
   normalizeScore,
@@ -26,6 +27,7 @@ interface DomainScoresProps {
 }
 
 export function DomainScores({ summary }: DomainScoresProps) {
+  const t = useTranslations("domain_scores")
   const [hoveredDomain, setHoveredDomain] = useState<string | null>(null)
 
   const domainScores = useMemo(
@@ -37,7 +39,7 @@ export function DomainScores({ summary }: DomainScoresProps) {
     <section className="px-6 py-16">
       <div className="mx-auto max-w-4xl">
         <h2 className="mb-10 text-center font-title text-2xl text-foreground">
-          Domain Scores
+          {t("title")}
         </h2>
 
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6">
@@ -101,7 +103,7 @@ export function DomainScores({ summary }: DomainScoresProps) {
 
                 {isTension && (
                   <span className="mt-1 text-[10px] text-muted-foreground">
-                    (higher = more)
+                    {t("higher_is_more")}
                   </span>
                 )}
 
@@ -112,7 +114,7 @@ export function DomainScores({ summary }: DomainScoresProps) {
                     className="absolute top-full left-1/2 z-20 mt-2 min-w-45 -translate-x-1/2 border border-star-dust-700 bg-card p-3 shadow-xl"
                   >
                     <span className="mb-2 block text-[10px] tracking-wider text-muted-foreground uppercase">
-                      Top Drivers
+                      {t("top_drivers")}
                     </span>
                     {drivers.slice(0, 3).map((d: SynastryDriverItem) => (
                       <div

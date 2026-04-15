@@ -10,6 +10,7 @@
 
 import { useState, useMemo } from "react"
 import { AnimatePresence } from "framer-motion"
+import { useTranslations } from "next-intl"
 
 import { AspectCardPreview } from "@/components/synastry/aspect-card-preview"
 import { RitualDrawer } from "@/components/synastry/ritual-drawer"
@@ -30,6 +31,7 @@ interface AspectExplorerProps {
 type SortKey = "rank" | "abs_polarity"
 
 export function AspectExplorer({ aspects }: AspectExplorerProps) {
+  const t = useTranslations("aspect_explorer")
   const [filterDomain, setFilterDomain] = useState<SynastryDomain | "all">(
     "all"
   )
@@ -81,13 +83,13 @@ export function AspectExplorer({ aspects }: AspectExplorerProps) {
     <section className="px-6 py-16" id="explorer">
       <div className="mx-auto max-w-4xl">
         <h2 className="mb-8 text-center font-title text-2xl text-foreground">
-          Aspect Explorer
+          {t("title")}
         </h2>
 
         <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
           <div className="flex flex-wrap gap-2">
             <Chip
-              label="All"
+              label={t("filter_all")}
               active={filterDomain === "all"}
               onClick={() => setFilterDomain("all")}
             />
@@ -106,12 +108,12 @@ export function AspectExplorer({ aspects }: AspectExplorerProps) {
 
           <div className="flex gap-2">
             <Chip
-              label="By Rank"
+              label={t("sort_rank")}
               active={sortBy === "rank"}
               onClick={() => setSortBy("rank")}
             />
             <Chip
-              label="By Intensity"
+              label={t("sort_intensity")}
               active={sortBy === "abs_polarity"}
               onClick={() => setSortBy("abs_polarity")}
             />
@@ -119,8 +121,12 @@ export function AspectExplorer({ aspects }: AspectExplorerProps) {
         </div>
 
         <p className="mb-6 text-center text-xs text-muted-foreground">
-          Showing {displayed.length} of {filtered.length} aspect
-          {filtered.length !== 1 ? "s" : ""}
+          {filtered.length !== 1
+            ? t("showing_plural", {
+                shown: displayed.length,
+                total: filtered.length,
+              })
+            : t("showing", { shown: displayed.length, total: filtered.length })}
         </p>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -143,14 +149,16 @@ export function AspectExplorer({ aspects }: AspectExplorerProps) {
               aria-expanded={isExpanded}
               className="border border-star-dust-700 bg-card px-6 py-2.5 text-xs tracking-widest text-foreground uppercase transition-all hover:border-koromiko-500/30"
             >
-              {isExpanded ? "Show Less" : `View All ${filtered.length} Aspects`}
+              {isExpanded
+                ? t("show_less")
+                : t("view_all", { count: filtered.length })}
             </button>
           </div>
         )}
 
         {filtered.length === 0 && (
           <p className="py-12 text-center text-sm text-muted-foreground italic">
-            No aspects match this filter.
+            {t("no_aspects")}
           </p>
         )}
 

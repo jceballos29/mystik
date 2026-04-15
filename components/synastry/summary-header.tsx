@@ -9,6 +9,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useTranslations } from "next-intl"
 
 import { svgCircumference, formatLocalDate } from "@/lib/utils"
 import type {
@@ -22,6 +23,7 @@ interface SummaryHeaderProps {
 }
 
 export function SummaryHeader({ summary, payload }: SummaryHeaderProps) {
+  const t = useTranslations("summary_header")
   const overallScore = summary.scores.find((s) => s.key === "overall")
   const overallValue = overallScore?.value ?? 0
   const circumference = svgCircumference(42)
@@ -35,7 +37,7 @@ export function SummaryHeader({ summary, payload }: SummaryHeaderProps) {
           transition={{ duration: 0.7 }}
         >
           <span className="mb-4 inline-block text-[10px] font-bold tracking-[0.4em] text-koromiko-400/60 uppercase">
-            Connection Archetype
+            {t("connection_archetype")}
           </span>
 
           <h1 className="mb-3 font-title text-4xl text-foreground sm:text-5xl md:text-6xl">
@@ -108,7 +110,7 @@ export function SummaryHeader({ summary, payload }: SummaryHeaderProps) {
             </div>
           </div>
           <span className="text-[10px] font-bold tracking-[0.4em] text-muted-foreground uppercase">
-            Overall
+            {t("overall")}
           </span>
         </motion.div>
 
@@ -133,7 +135,7 @@ export function SummaryHeader({ summary, payload }: SummaryHeaderProps) {
             <div className="space-y-3 text-left">
               <div className="border border-l-2 border-star-dust-700 border-l-koromiko-500/40 bg-card p-4">
                 <span className="mb-1 block text-[10px] font-bold tracking-[0.4em] text-koromiko-400/60 uppercase">
-                  Bond Tone
+                  {t("bond_tone")}
                 </span>
                 <p className="text-sm leading-relaxed text-foreground">
                   {summary.bands.theme}
@@ -141,7 +143,7 @@ export function SummaryHeader({ summary, payload }: SummaryHeaderProps) {
               </div>
               <div className="border border-l-2 border-star-dust-700 border-l-emerald-500/40 bg-card p-4">
                 <span className="mb-1 block text-[10px] font-bold tracking-[0.4em] text-emerald-400/60 uppercase">
-                  Core Dynamic
+                  {t("core_dynamic")}
                 </span>
                 <p className="text-sm leading-relaxed text-foreground">
                   {summary.bands.core}
@@ -149,7 +151,7 @@ export function SummaryHeader({ summary, payload }: SummaryHeaderProps) {
               </div>
               <div className="border border-l-2 border-star-dust-700 border-l-rose-500/40 bg-card p-4">
                 <span className="mb-1 block text-[10px] font-bold tracking-[0.4em] text-rose-400/60 uppercase">
-                  Watch For
+                  {t("watch_for")}
                 </span>
                 <p className="text-sm leading-relaxed text-foreground">
                   {summary.bands.shadow}

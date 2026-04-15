@@ -10,34 +10,19 @@
 
 import { motion } from "framer-motion"
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion"
+import { useTranslations } from "next-intl"
 import { Card, CardContent } from "../ui/card"
 import Image from "next/image"
 
-const services = [
-  {
-    id: "personalized",
-    image: "/aquarius.png",
-    title: "Personalized Horoscope",
-    description:
-      "Transit-based insights calculated from your natal chart for a reading that is uniquely yours.",
-  },
-  {
-    id: "horoscope",
-    image: "/virgo.png",
-    title: "Daily Horoscope",
-    description:
-      "Get today's cosmic forecast for your zodiac sign — love, career, money, and health.",
-  },
-  {
-    id: "synastry",
-    image: "/gemini.png",
-    title: "Synastry",
-    description:
-      "Explore the astrological compatibility between two people with a full aspect-by-aspect report.",
-  },
-]
+const servicesMeta = [
+  { id: "personalized", image: "/aquarius.png", key: "personalized" },
+  { id: "horoscope", image: "/virgo.png", key: "horoscope" },
+  { id: "synastry", image: "/gemini.png", key: "synastry" },
+] as const
 
 export function Services() {
+  const t = useTranslations("services")
+
   return (
     <section
       id="services"
@@ -52,16 +37,16 @@ export function Services() {
           whileInView="visible"
           viewport={viewportOnce}
         >
-          {services.map((service) => (
+          {servicesMeta.map((service) => (
             <motion.div
               key={service.id}
-              className="group block"
+              className="group flex h-full"
               variants={staggerItem}
               whileHover={{ y: -6, transition: { duration: 0.25 } }}
             >
               <button
                 type="button"
-                className="w-full cursor-pointer text-left"
+                className="flex h-full w-full cursor-pointer text-left"
                 onClick={() => {
                   const el = document.getElementById(service.id)
                   if (el) {
@@ -76,17 +61,17 @@ export function Services() {
                     <figure className="mb-4 h-20 overflow-hidden">
                       <Image
                         src={service.image}
-                        alt={service.title}
+                        alt={t(`${service.key}.title`)}
                         width={80}
                         height={80}
                         className="h-full w-full object-contain"
                       />
                     </figure>
                     <h3 className="text-center font-title text-xl font-semibold text-primary transition-colors group-hover:text-primary">
-                      {service.title}
+                      {t(`${service.key}.title`)}
                     </h3>
                     <p className="text-center text-sm leading-relaxed text-muted-foreground">
-                      {service.description}
+                      {t(`${service.key}.description`)}
                     </p>
                   </CardContent>
                 </Card>

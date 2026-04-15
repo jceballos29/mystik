@@ -10,7 +10,7 @@
  */
 "use client"
 
-import { useState, useTransition } from "react"
+import { useState, useTransition, useCallback } from "react"
 import {
   useForm,
   Controller,
@@ -20,6 +20,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { CityAutocomplete } from "@/components/synastry/city-autocomplete"
@@ -51,8 +52,19 @@ import {
  */
 export function SynastryFormSection() {
   const router = useRouter()
+  const t = useTranslations("synastry_form")
   const [step, setStep] = useState<1 | 2>(1)
   const [isPending, startTransition] = useTransition()
+  const [isCitySearchingA, setIsCitySearchingA] = useState(false)
+  const [isCitySearchingB, setIsCitySearchingB] = useState(false)
+  const handleCityLoadingA = useCallback(
+    (loading: boolean) => setIsCitySearchingA(loading),
+    []
+  )
+  const handleCityLoadingB = useCallback(
+    (loading: boolean) => setIsCitySearchingB(loading),
+    []
+  )
 
   const {
     register,
@@ -97,18 +109,19 @@ export function SynastryFormSection() {
               : "text-star-dust-500 hover:text-star-dust-300"
           }`}
         >
-          Person A
+          {t("person_a")}
         </button>
         <button
           type="button"
           onClick={() => setStep(2)}
-          className={`flex-1 px-6 py-3 text-center text-sm tracking-widest uppercase transition-colors ${
+          disabled={isCitySearchingA}
+          className={`flex-1 px-6 py-3 text-center text-sm tracking-widest uppercase transition-colors disabled:pointer-events-none disabled:opacity-40 ${
             step === 2
               ? "text-koromiko-400"
               : "text-star-dust-500 hover:text-star-dust-300"
           }`}
         >
-          Person B
+          {t("person_b")}
         </button>
 
         <motion.div
@@ -131,6 +144,7 @@ export function SynastryFormSection() {
               register={register}
               control={control}
               errors={errors}
+              onCityLoadingChange={handleCityLoadingA}
             />
           ) : (
             <PersonInput
@@ -139,43 +153,57 @@ export function SynastryFormSection() {
               register={register}
               control={control}
               errors={errors}
+              onCityLoadingChange={handleCityLoadingB}
             />
           )}
         </AnimatePresence>
       </div>
 
-      <div className="mt-4 flex items-center justify-between">
-        {step === 2 ? (
-          <button
-            type="button"
-            onClick={() => setStep(1)}
-            className="text-xs tracking-wider text-star-dust-500 uppercase transition-colors hover:text-foreground"
-          >
-            ← Back
-          </button>
-        ) : (
-          <div />
+      <div className="mt-4 space-y-3">
+        {step === 1 && isCitySearchingA && (
+          <p className="text-center text-[10px] text-star-dust-500 italic">
+            {t("city_searching")}
+          </p>
         )}
+        {step === 2 && isCitySearchingB && (
+          <p className="text-center text-[10px] text-star-dust-500 italic">
+            {t("city_searching")}
+          </p>
+        )}
+        <div className="flex items-center justify-between">
+          {step === 2 ? (
+            <button
+              type="button"
+              onClick={() => setStep(1)}
+              className="text-xs tracking-wider text-star-dust-500 uppercase transition-colors hover:text-foreground"
+            >
+              {t("back")}
+            </button>
+          ) : (
+            <div />
+          )}
 
-        {step === 1 ? (
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleNext}
-            className="w-full border-star-dust-700 hover:border-koromiko-500/50"
-          >
-            Next Person →
-          </Button>
-        ) : (
-          <Button
-            type="submit"
-            disabled={isPending}
-            className="border border-koromiko-500/30 bg-koromiko-500/10 text-koromiko-400 hover:bg-koromiko-500/20"
-            variant="ghost"
-          >
-            {isPending ? "Calculating…" : "Access report"}
-          </Button>
-        )}
+          {step === 1 ? (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleNext}
+              disabled={isCitySearchingA}
+              className="w-full border-star-dust-700 hover:border-koromiko-500/50"
+            >
+              {t("next")}
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              disabled={isPending || isCitySearchingB}
+              className="border border-koromiko-500/30 bg-koromiko-500/10 text-koromiko-400 hover:bg-koromiko-500/20"
+              variant="ghost"
+            >
+              {isPending ? t("calculating") : t("submit")}
+            </Button>
+          )}
+        </div>
       </div>
     </form>
   )
@@ -198,12 +226,15 @@ function PersonInput({
   register,
   control,
   errors,
+  onCityLoadingChange,
 }: {
   person: "a" | "b"
   register: ReturnType<typeof useForm<SynastryFormValues>>["register"]
   control: Control<SynastryFormValues>
   errors: ReturnType<typeof useForm<SynastryFormValues>>["formState"]["errors"]
+  onCityLoadingChange?: (loading: boolean) => void
 }) {
+  const t = useTranslations("synastry_form")
   const personErrors = errors[person]
   return (
     <motion.div
@@ -217,14 +248,14 @@ function PersonInput({
           htmlFor={`${person}-name`}
           className="ml-1 block text-[10px] font-bold tracking-[0.4em] text-muted-foreground uppercase"
         >
-          Name (Optional)
+          {t("name_label")}
         </label>
         <input
           {...register(`${person}.name`)}
           id={`${person}-name`}
           type="text"
           className="w-full rounded-none border border-star-dust-700 bg-card px-4 py-3 text-sm text-foreground transition-colors placeholder:text-muted-foreground focus:border-koromiko-500/50 focus:outline-none"
-          placeholder="Enter name"
+          placeholder={t("name_placeholder")}
         />
       </div>
 
@@ -234,7 +265,7 @@ function PersonInput({
             htmlFor={`${person}-date`}
             className="ml-1 block text-[10px] font-bold tracking-[0.4em] text-muted-foreground uppercase"
           >
-            Date of Birth
+            {t("date_of_birth")}
           </label>
           <input
             {...register(`${person}.date`)}
@@ -258,7 +289,7 @@ function PersonInput({
             htmlFor={`${person}-time`}
             className="ml-1 block text-[10px] font-bold tracking-[0.4em] text-muted-foreground uppercase"
           >
-            Time (Approx)
+            {t("time_approx")}
           </label>
           <input
             {...register(`${person}.time`)}
@@ -275,9 +306,10 @@ function PersonInput({
         render={({ field }) => (
           <div>
             <CityAutocomplete
-              label="Place of Birth"
+              label={t("place_of_birth")}
               onSelect={(city: CityResult) => field.onChange(city)}
               onClear={() => field.onChange(null)}
+              onLoadingChange={onCityLoadingChange}
             />
             {personErrors?.location && (
               <p

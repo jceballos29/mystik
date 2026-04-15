@@ -15,10 +15,12 @@ import {
   viewportOnce,
 } from "@/lib/motion"
 import { motion } from "framer-motion"
+import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { BirthDetailsForm } from "../birth-details-form"
 
 export function Personalized() {
+  const t = useTranslations("personalized")
   return (
     <motion.section
       variants={fadeIn}
@@ -82,14 +84,13 @@ export function Personalized() {
               variants={staggerItem}
               className="mt-4 mb-6 scroll-m-20 font-title text-4xl font-bold tracking-wider text-balance text-primary first:mt-0"
             >
-              Your Personal Cosmic Blueprint
+              {t("title")}
             </motion.h2>
             <motion.p
               variants={staggerItem}
               className="mx-auto mb-8 max-w-3xl leading-relaxed text-muted-foreground"
             >
-              Enter your birth details for a reading based on your unique natal
-              chart and today&apos;s planetary transits
+              {t("description")}
             </motion.p>
 
             <BirthDetailsForm />

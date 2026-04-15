@@ -10,10 +10,11 @@
 
 import { motion, AnimatePresence } from "framer-motion"
 import { Loader2, MapPin } from "lucide-react"
-import type { KeyboardEvent } from "react"
+import { type KeyboardEvent, useEffect } from "react"
 
 import type { CityResult } from "@/lib/validations/geo.schema"
 import { useCitySearch } from "@/hooks/use-city-search"
+import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 
 interface CityAutocompleteProps {
@@ -21,6 +22,7 @@ interface CityAutocompleteProps {
   onSelect: (city: CityResult) => void
   onClear?: () => void
   initialCity?: CityResult
+  onLoadingChange?: (loading: boolean) => void
 }
 
 export function CityAutocomplete({
@@ -28,7 +30,9 @@ export function CityAutocomplete({
   onSelect,
   onClear,
   initialCity,
+  onLoadingChange,
 }: CityAutocompleteProps) {
+  const t = useTranslations("city_autocomplete")
   const {
     query,
     selectedCity,
@@ -43,6 +47,10 @@ export function CityAutocomplete({
     handleQueryChange,
     setIsOpen,
   } = useCitySearch({ initialCity })
+
+  useEffect(() => {
+    onLoadingChange?.(loading)
+  }, [loading, onLoadingChange])
 
   const handleSelect = (city: CityResult) => {
     selectCity(city)
@@ -86,7 +94,7 @@ export function CityAutocomplete({
             }
           }}
           onKeyDown={handleKeyDown}
-          placeholder="Search city..."
+          placeholder={t("placeholder")}
           autoComplete="off"
           aria-activedescendant={
             activeIndex >= 0 ? `city-option-${activeIndex}` : undefined
@@ -119,13 +127,13 @@ export function CityAutocomplete({
         !isOpen &&
         !searchError && (
           <p className="mt-1.5 ml-1 text-[10px] text-star-dust-500 italic">
-            No results. Try a different spelling.
+            {t("no_results")}
           </p>
         )}
 
       {searchError && !loading && (
         <p className="mt-1.5 ml-1 text-[10px] text-destructive">
-          Could not search for cities. Please try again.
+          {t("search_error")}
         </p>
       )}
 
@@ -133,7 +141,7 @@ export function CityAutocomplete({
         {isOpen && results.length > 0 && (
           <motion.div
             role="listbox"
-            aria-label="City search results"
+            aria-label={t("results_label")}
             aria-live="polite"
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}

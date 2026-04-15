@@ -10,9 +10,11 @@
 import { fadeUp, staggerContainer, viewportOnce } from "@/lib/motion"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import { useTranslations } from "next-intl"
 import { SynastryFormSection } from "../synastry/synastry-form-section"
 
 export function Synastry() {
+  const t = useTranslations("synastry_section")
   return (
     <section
       id="synastry"
@@ -45,10 +47,10 @@ export function Synastry() {
             className="h-12 w-20"
           />
           <h2 className="mt-4 mb-8 scroll-m-20 font-title text-5xl font-semibold tracking-wider text-balance text-primary first:mt-0">
-            Cosmic Compatibility
+            {t("title")}
           </h2>
           <p className="mx-auto max-w-3xl text-center leading-relaxed text-muted-foreground">
-            Discover the astrological dynamics between you and another person
+            {t("description")}
           </p>
         </motion.header>
         <motion.div

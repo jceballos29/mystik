@@ -9,6 +9,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { useTranslations } from "next-intl"
 
 import { AspectCardPreview } from "@/components/synastry/aspect-card-preview"
 import { RitualDrawer } from "@/components/synastry/ritual-drawer"
@@ -30,6 +31,8 @@ export function StrengthsChallenges({
   const [selectedAspect, setSelectedAspect] = useState<SynastryAspect | null>(
     null
   )
+
+  const t = useTranslations("strengths_challenges")
 
   const strengths = useMemo(
     () =>
@@ -57,7 +60,9 @@ export function StrengthsChallenges({
                 className="h-2 w-2 rounded-full bg-emerald-400"
                 aria-hidden="true"
               />
-              <h2 className="font-title text-xl text-foreground">Strengths</h2>
+              <h2 className="font-title text-xl text-foreground">
+                {t("strengths")}
+              </h2>
             </div>
             <div className="space-y-3">
               {strengths.map((aspect) => (
@@ -69,7 +74,7 @@ export function StrengthsChallenges({
               ))}
               {strengths.length === 0 && (
                 <p className="text-sm text-muted-foreground italic">
-                  No strengths identified.
+                  {t("no_strengths")}
                 </p>
               )}
             </div>
@@ -81,7 +86,9 @@ export function StrengthsChallenges({
                 className="h-2 w-2 rounded-full bg-rose-400"
                 aria-hidden="true"
               />
-              <h2 className="font-title text-xl text-foreground">Challenges</h2>
+              <h2 className="font-title text-xl text-foreground">
+                {t("challenges")}
+              </h2>
             </div>
             <div className="space-y-3">
               {challenges.map((aspect) => (
@@ -93,7 +100,7 @@ export function StrengthsChallenges({
               ))}
               {challenges.length === 0 && (
                 <p className="text-sm text-muted-foreground italic">
-                  No challenges identified.
+                  {t("no_challenges")}
                 </p>
               )}
             </div>

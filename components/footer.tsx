@@ -10,18 +10,20 @@
 import { Separator } from "@/components/ui/separator"
 import { staggerContainer, staggerItem, viewportOnceFooter } from "@/lib/motion"
 import { motion } from "framer-motion"
+import { useTranslations } from "next-intl"
 import Image from "next/image"
 import Link from "next/link"
 
-/** Enlaces de navegación del footer que apuntan a las secciones del landing. */
-const navLinks = [
-  { label: "Personalized Horoscope", href: "personalized" },
-  { label: "Daily Horoscope", href: "horoscope" },
-  { label: "Synastry", href: "synastry" },
-]
+const navLinksHref = [
+  { key: "personalized", href: "personalized" },
+  { key: "horoscope", href: "horoscope" },
+  { key: "synastry", href: "synastry" },
+] as const
 
 /** Footer principal con información institucional, navegación y créditos. */
 export function Footer() {
+  const t = useTranslations("footer")
+  const ts = useTranslations("services")
   return (
     <footer className="relative overflow-hidden border-t border-border bg-background">
       <div className="relative z-10 mx-auto max-w-5xl px-6 py-16">
@@ -37,17 +39,16 @@ export function Footer() {
               <Image src="/logo.png" alt="logo" width={150} height={150} />
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Get a personal analysis of your current situation that will help
-              you to find life-changing solutions in any sphere of your life.
+              {t("description")}
             </p>
           </motion.div>
 
           <motion.div variants={staggerItem} className="col-span-2">
             <h3 className="mb-4 text-xs font-semibold tracking-[0.2em] text-foreground uppercase">
-              Politécnico Internacional
+              {t("school_title")}
             </h3>
             <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
-              Colombia — Bogotá D.C.
+              {t("school_location")}
             </p>
             <a
               href="mailto:juan.ceballos@pi.edu.co"
@@ -58,12 +59,12 @@ export function Footer() {
           </motion.div>
           <motion.div variants={staggerItem}>
             <h3 className="mb-4 text-xs font-semibold tracking-[0.2em] text-foreground uppercase">
-              Links
+              {t("links_title")}
             </h3>
             <nav>
               <ul className="space-y-3">
-                {navLinks.map((link) => (
-                  <li key={link.label}>
+                {navLinksHref.map((link) => (
+                  <li key={link.key}>
                     <motion.button
                       type="button"
                       className="inline-block cursor-pointer border-0 bg-transparent p-0 text-sm text-muted-foreground transition-colors hover:text-primary"
@@ -81,7 +82,7 @@ export function Footer() {
                         }
                       }}
                     >
-                      {link.label}
+                      {ts(`${link.key}.title`)}
                     </motion.button>
                   </li>
                 ))}
@@ -103,7 +104,7 @@ export function Footer() {
           }}
         >
           <p className="text-xs text-muted-foreground">
-            &copy; 2026 Mystik. All rights reserved.
+            &copy; {new Date().getFullYear()} Mystik. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground">
             Astrological guidance for the modern seeker.

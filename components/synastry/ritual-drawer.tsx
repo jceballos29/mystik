@@ -12,6 +12,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useTranslations } from "next-intl"
 import { Dialog as DialogPrimitive } from "radix-ui"
 import { XIcon } from "lucide-react"
 
@@ -32,6 +33,7 @@ interface RitualDrawerProps {
 }
 
 export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
+  const t = useTranslations("ritual_drawer")
   const [activeBlock, setActiveBlock] = useState<"supportive" | "challenging">(
     "supportive"
   )
@@ -80,7 +82,7 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
                   <div className="mb-6 flex justify-end">
                     <DialogPrimitive.Close className="p-1 text-muted-foreground transition-colors hover:text-foreground">
                       <XIcon className="h-5 w-5" aria-hidden="true" />
-                      <span className="sr-only">Close</span>
+                      <span className="sr-only">{t("close")}</span>
                     </DialogPrimitive.Close>
                   </div>
 
@@ -101,10 +103,10 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
                     </h2>
 
                     <div className="mb-4 flex items-center gap-3">
-                      <LeanBadge lean={lean} />
+                      <LeanBadge lean={lean} label={t(lean)} />
                       <div className="flex items-center gap-2">
                         <span className="text-[10px] tracking-wider text-muted-foreground uppercase">
-                          Intensity
+                          {t("intensity")}
                         </span>
                         <IntensityBars score={aspect.polarity_score} />
                       </div>
@@ -125,13 +127,13 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
                   {aspect.display_policy === "both_sides" && (
                     <div className="mb-8 flex border border-star-dust-700 bg-background/50 p-1">
                       <PolarityToggleButton
-                        label="Supportive"
+                        label={t("supportive")}
                         active={activeBlock === "supportive"}
                         onClick={() => setActiveBlock("supportive")}
                         variant="supportive"
                       />
                       <PolarityToggleButton
-                        label="Challenging"
+                        label={t("challenging")}
                         active={activeBlock === "challenging"}
                         onClick={() => setActiveBlock("challenging")}
                         variant="challenging"
@@ -158,9 +160,9 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
                     <div className="mt-8 border-t border-star-dust-700 pt-8">
                       <p className="mb-4 text-xs tracking-wider text-muted-foreground uppercase">
                         {activeBlock === "supportive"
-                          ? "Challenging"
-                          : "Supportive"}{" "}
-                        perspective
+                          ? t("challenging")
+                          : t("supportive")}{" "}
+                        {t("perspective")}
                       </p>
                       <BlockContent
                         block={
@@ -183,9 +185,9 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
                   <div className="mt-10 border-t border-star-dust-700 pt-6">
                     <p className="text-xs leading-relaxed text-muted-foreground">
                       <span className="text-star-dust-400">
-                        Interpretation note:
+                        {t("interpretation_note")}
                       </span>{" "}
-                      This aspect leans{" "}
+                      {t("leans")}{" "}
                       <span
                         className={
                           lean === "supportive"
@@ -195,12 +197,11 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
                               : "text-koromiko-400/70"
                         }
                       >
-                        {lean}
+                        {t(lean)}
                       </span>{" "}
-                      with a polarity score of{" "}
+                      {t("polarity_score")}{" "}
                       {aspect.polarity_score > 0 ? "+" : ""}
-                      {aspect.polarity_score.toFixed(2)}. Scores closer to zero
-                      indicate a more balanced dynamic.
+                      {aspect.polarity_score.toFixed(2)}. {t("balanced_note")}
                     </p>
                   </div>
                 </div>
@@ -215,8 +216,10 @@ export function RitualDrawer({ aspect, onClose }: RitualDrawerProps) {
 
 function LeanBadge({
   lean,
+  label,
 }: {
   lean: "supportive" | "challenging" | "balanced"
+  label?: string
 }) {
   const cls =
     lean === "supportive"
@@ -227,7 +230,7 @@ function LeanBadge({
 
   return (
     <span className={`rounded-sm border px-2 py-0.5 text-xs ${cls}`}>
-      {lean}
+      {label ?? lean}
     </span>
   )
 }

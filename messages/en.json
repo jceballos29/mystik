@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "title": "Mystik — Daily Horoscope & Synastry",
+    "description": "Navigate the cosmos. Daily horoscopes, personalized readings, and synastry reports."
+  },
+  "hero": {
+    "badge": "Holistic Healing & Celestial Guidance",
+    "heading": "Discover what the stars have in store for you",
+    "description": "Navigate the cosmos of your own existence. We interpret the celestial language to bring you clarity, purpose, and connection with the universe.",
+    "cta_primary": "Explore Services",
+    "cta_secondary": "Get My Horoscope",
+    "scroll_down": "Scroll Down"
+  },
+  "services": {
+    "personalized": {
+      "title": "Personalized Horoscope",
+      "description": "Transit-based insights calculated from your natal chart for a reading that is uniquely yours."
+    },
+    "horoscope": {
+      "title": "Daily Horoscope",
+      "description": "Get today's cosmic forecast for your zodiac sign — love, career, money, and health."
+    },
+    "synastry": {
+      "title": "Synastry",
+      "description": "Explore the astrological compatibility between two people with a full aspect-by-aspect report."
+    }
+  },
+  "about": {
+    "title": "About Holistic Healing",
+    "description": "Mystik offers astrological counseling and Reiki energy healing to help clients reach their greatest potential. By understanding the role that planetary cycles play in their lives, clients are empowered to make better decisions resulting in more rewarding and fulfilling lives."
+  },
+  "horoscope": {
+    "title": "Choose your zodiac sign",
+    "description": "What's your sign? Discover your horoscope for today",
+    "back": "Back",
+    "reading_unavailable": "Reading Unavailable",
+    "energy_forecast": "Energy Forecast",
+    "cosmic_context": "Cosmic Context",
+    "moon_phase": "Moon Phase",
+    "moon_sign": "Moon Sign",
+    "planetary_aspects": "Planetary Aspects",
+    "daily_anchors": "Daily Anchors",
+    "color": "Color",
+    "number": "Number",
+    "time": "Time",
+    "overall": "Overall",
+    "do": "Do",
+    "dont": "Don't"
+  },
+  "personalized": {
+    "title": "Your Personal Cosmic Blueprint",
+    "description": "Enter your birth details for a reading based on your unique natal chart and today's planetary transits"
+  },
+  "synastry_section": {
+    "title": "Cosmic Compatibility",
+    "description": "Discover the astrological dynamics between you and another person"
+  },
+  "synastry_page": {
+    "meta_title": "Synastry Report — Mystik",
+    "meta_description": "Discover the astrological compatibility between two people with a full synastry report.",
+    "error_title": "Something went wrong",
+    "invalid_payload": "The synastry data appears to be invalid or missing. Please go back and try again.",
+    "back": "← Back to Home"
+  },
+  "synastry_form": {
+    "person_a": "Person A",
+    "person_b": "Person B",
+    "back": "← Back",
+    "next": "Next Person →",
+    "submit": "Access report",
+    "calculating": "Calculating…",
+    "name_label": "Name (Optional)",
+    "name_placeholder": "Enter name",
+    "date_of_birth": "Date of Birth",
+    "time_approx": "Time (Approx)",
+    "place_of_birth": "Place of Birth",
+    "city_searching": "Searching for city..."
+  },
+  "birth_form": {
+    "birth_date": "Birth Date",
+    "birth_time": "Birth Time",
+    "time_unknown": "I don't know",
+    "time_unknown_set": "Time unknown ✓",
+    "time_unknown_note": "Note: Accuracy for houses and ascendant will be limited. We'll use 12:00 PM as a default.",
+    "birth_city": "Birth City",
+    "city_searching": "Searching for city...",
+    "submit": "See today's guidance"
+  },
+  "footer": {
+    "description": "Get a personal analysis of your current situation that will help you to find life-changing solutions in any sphere of your life.",
+    "school_title": "Politécnico Internacional",
+    "school_location": "Colombia — Bogotá D.C.",
+    "links_title": "Links",
+    "copyright": "© {year} Mystik. All rights reserved."
+  },
+  "city_autocomplete": {
+    "placeholder": "Search city...",
+    "no_results": "No results. Try a different spelling.",
+    "search_error": "Could not search for cities. Please try again.",
+    "results_label": "City search results",
+    "searching": "Searching city..."
+  },
+  "aspect_explorer": {
+    "title": "Aspect Explorer",
+    "filter_all": "All",
+    "sort_rank": "By Rank",
+    "sort_intensity": "By Intensity",
+    "showing": "Showing {shown} of {total} aspect",
+    "showing_plural": "Showing {shown} of {total} aspects",
+    "show_less": "Show Less",
+    "view_all": "View All {count} Aspects",
+    "no_aspects": "No aspects match this filter."
+  },
+  "domain_scores": {
+    "title": "Domain Scores",
+    "top_drivers": "Top Drivers",
+    "higher_is_more": "(higher = more)"
+  },
+  "strengths_challenges": {
+    "strengths": "Strengths",
+    "challenges": "Challenges",
+    "no_strengths": "No strengths identified.",
+    "no_challenges": "No challenges identified."
+  },
+  "summary_header": {
+    "connection_archetype": "Connection Archetype",
+    "overall": "Overall",
+    "bond_tone": "Bond Tone",
+    "core_dynamic": "Core Dynamic",
+    "watch_for": "Watch For"
+  },
+  "ritual_drawer": {
+    "close": "Close",
+    "intensity": "Intensity",
+    "supportive": "Supportive",
+    "challenging": "Challenging",
+    "balanced": "Balanced",
+    "perspective": "perspective",
+    "interpretation_note": "Interpretation note:",
+    "leans": "This aspect leans",
+    "polarity_score": "with a polarity score of",
+    "balanced_note": "Scores closer to zero indicate a more balanced dynamic."
+  },
+  "zodiac_signs": {
+    "aries": "Aries",
+    "taurus": "Taurus",
+    "gemini": "Gemini",
+    "cancer": "Cancer",
+    "leo": "Leo",
+    "virgo": "Virgo",
+    "libra": "Libra",
+    "scorpio": "Scorpio",
+    "sagittarius": "Sagittarius",
+    "capricorn": "Capricorn",
+    "aquarius": "Aquarius",
+    "pisces": "Pisces",
+    "Jan": "Jan",
+    "Feb": "Feb",
+    "Mar": "Mar",
+    "Apr": "Apr",
+    "May": "May",
+    "Jun": "Jun",
+    "Jul": "Jul",
+    "Aug": "Aug",
+    "Sep": "Sep",
+    "Oct": "Oct",
+    "Nov": "Nov",
+    "Dec": "Dec"
+  }
+}

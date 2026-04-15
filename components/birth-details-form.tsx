@@ -11,10 +11,12 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import { useState, useCallback } from "react"
 import { useForm, useWatch, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { CalendarDays, Clock } from "lucide-react"
+import { useTranslations } from "next-intl"
 import type { CityResult } from "@/lib/validations/geo.schema"
 import { CityAutocomplete } from "@/components/synastry/city-autocomplete"
 import { encodeBase64Url } from "@/lib/utils"
@@ -66,6 +68,12 @@ type BirthFormValues = z.infer<typeof birthSchema>
  */
 export function BirthDetailsForm() {
   const router = useRouter()
+  const t = useTranslations("birth_form")
+  const [isCitySearching, setIsCitySearching] = useState(false)
+  const handleCityLoadingChange = useCallback(
+    (loading: boolean) => setIsCitySearching(loading),
+    []
+  )
 
   const {
     register,
@@ -122,7 +130,7 @@ export function BirthDetailsForm() {
             className="flex items-center gap-2 text-[10px] font-bold tracking-[0.4em] text-star-dust-500 uppercase"
           >
             <CalendarDays className="h-3 w-3 opacity-50" />
-            Birth Date
+            {t("birth_date")}
           </label>
           <input
             id="birth-date"
@@ -149,7 +157,7 @@ export function BirthDetailsForm() {
               className="flex items-center gap-2 text-[10px] font-bold tracking-[0.4em] text-star-dust-500 uppercase"
             >
               <Clock className="h-3 w-3 opacity-50" />
-              Birth Time
+              {t("birth_time")}
             </label>
             <button
               type="button"
@@ -164,7 +172,7 @@ export function BirthDetailsForm() {
                   : "text-star-dust-600 hover:text-star-dust-400"
               }`}
             >
-              {timeUnknown ? "Time unknown ✓" : "I don't know"}
+              {timeUnknown ? t("time_unknown_set") : t("time_unknown")}
             </button>
           </div>
           <div className={timeUnknown ? "pointer-events-none opacity-30" : ""}>
@@ -180,8 +188,7 @@ export function BirthDetailsForm() {
 
       {timeUnknown && (
         <p className="-mt-4 text-[10px] leading-relaxed text-star-dust-600 italic">
-          Note: Accuracy for houses and ascendant will be limited. We&apos;ll
-          use 12:00 PM as a default.
+          {t("time_unknown_note")}
         </p>
       )}
 
@@ -190,10 +197,11 @@ export function BirthDetailsForm() {
         control={control}
         render={({ field }) => (
           <CityAutocomplete
-            label="Birth City"
+            label={t("birth_city")}
             onSelect={(city) => field.onChange(city)}
             onClear={() => field.onChange(null)}
             initialCity={field.value ?? undefined}
+            onLoadingChange={handleCityLoadingChange}
           />
         )}
       />
@@ -205,12 +213,17 @@ export function BirthDetailsForm() {
       )}
 
       <div className="space-y-3 pt-4">
+        {isCitySearching && (
+          <p className="ml-1 text-[10px] text-star-dust-500 italic">
+            {t("city_searching")}
+          </p>
+        )}
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || isCitySearching}
           className="h-14 w-full border border-star-dust-600 bg-koromiko-500/10 text-[10px] font-bold tracking-[0.4em] text-primary uppercase transition-all hover:border-koromiko-500/50 hover:bg-koromiko-500/20 disabled:pointer-events-none disabled:opacity-30"
         >
-          See today&apos;s guidance
+          {t("submit")}
         </button>
       </div>
     </form>

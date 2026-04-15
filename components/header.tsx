@@ -10,6 +10,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import { LocaleSwitcher } from "@/components/locale-switcher"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 import { motion, useMotionValueEvent, useScroll } from "framer-motion"
@@ -49,6 +50,7 @@ export function Header() {
         <Link href="/">
           <Image src="/logo.png" alt="Logo" width={100} height={100} />
         </Link>
+        <LocaleSwitcher />
       </nav>
     </motion.header>
   )

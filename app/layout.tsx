@@ -1,20 +1,14 @@
 /**
  * @module app/layout
  *
- * Layout raíz de la aplicación. Configura las fuentes tipográficas
- * (El Messiri para títulos, Proza Libre para cuerpo), el provider
- * de tema (dark-mode forzado), el componente de scroll-to-top,
- * el header global y el footer. Envuelve todo el árbol de componentes.
+ * Layout raíz mínimo. Define la estructura <html>/<body> con fuentes
+ * y variables CSS. Los providers, Header, Footer y NextIntlClientProvider
+ * se configuran en app/[locale]/layout.tsx para soporte i18n.
  */
-import type { Metadata } from "next"
 import { El_Messiri, Proza_Libre } from "next/font/google"
 
-import { ScrollToTop } from "@/components/scroll-to-top"
-import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import "./globals.css"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
 
 const elMessiri = El_Messiri({
   variable: "--font-title",
@@ -27,12 +21,6 @@ const prozaLibre = Proza_Libre({
   subsets: ["latin"],
 })
 
-export const metadata: Metadata = {
-  title: "Mystik — Daily Horoscope & Synastry",
-  description:
-    "Navigate the cosmos. Daily horoscopes, personalized readings, and synastry reports.",
-}
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -40,7 +28,6 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
       suppressHydrationWarning
       className={cn(
         "antialiased",
@@ -52,16 +39,7 @@ export default function RootLayout({
         scrollBehavior: "smooth",
       }}
     >
-      <body>
-        <ThemeProvider>
-          <ScrollToTop />
-          <Header />
-          <main className="min-h-screen bg-background text-foreground">
-            {children}
-          </main>
-          <Footer />
-        </ThemeProvider>
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

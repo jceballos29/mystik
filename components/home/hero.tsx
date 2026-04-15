@@ -12,10 +12,12 @@ import { fadeIn, staggerContainer, staggerItem } from "@/lib/motion"
 import { motion, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
 import { useRef } from "react"
+import { useTranslations } from "next-intl"
 import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
 
 export function Hero() {
+  const t = useTranslations("hero")
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -52,22 +54,20 @@ export function Hero() {
               variant="outline"
               className="mb-6 rounded-none border-primary/40 bg-primary/10 px-4 py-2 text-xs tracking-[0.2em] text-primary uppercase"
             >
-              Holistic Healing &amp; Celestial Guidance
+              {t("badge")}
             </Badge>
           </motion.div>
           <motion.h1
             variants={staggerItem}
             className="mb-6 text-center font-title text-4xl font-bold tracking-wider text-balance text-primary md:text-5xl lg:text-6xl"
           >
-            Discover what the stars have in store for you
+            {t("heading")}
           </motion.h1>
           <motion.p
             variants={staggerItem}
             className="mx-auto mb-10 max-w-2xl text-center leading-relaxed font-medium text-pretty text-muted-foreground"
           >
-            Navigate the cosmos of your own existence. We interpret the
-            celestial language to bring you clarity, purpose, and connection
-            with the universe.
+            {t("description")}
           </motion.p>
           <motion.div
             variants={staggerItem}
@@ -81,7 +81,7 @@ export function Hero() {
                   ?.scrollIntoView({ behavior: "smooth" })
               }
             >
-              Explore Services
+              {t("cta_primary")}
             </Button>
           </motion.div>
 
@@ -91,7 +91,7 @@ export function Hero() {
             className="mt-12 flex flex-col items-center gap-2 sm:mt-20"
           >
             <span className="text-xs tracking-[0.25em] text-muted-foreground uppercase">
-              Scroll
+              {t("scroll_down")}
             </span>
             <motion.div
               className="h-12 w-px bg-primary/40"

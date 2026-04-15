@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "title": "Mystik — Horóscopo Diario y Sinastría",
+    "description": "Navega el cosmos. Horóscopos diarios, lecturas personalizadas y reportes de sinastría."
+  },
+  "hero": {
+    "badge": "Sanación Holística & Guía Celestial",
+    "heading": "Descubre lo que las estrellas tienen reservado para ti",
+    "description": "Navega el cosmos de tu propia existencia. Interpretamos el lenguaje celestial para brindarte claridad, propósito y conexión con el universo.",
+    "cta_primary": "Explorar Servicios",
+    "cta_secondary": "Ver Mi Horóscopo",
+    "scroll_down": "Desplazar hacia abajo"
+  },
+  "services": {
+    "personalized": {
+      "title": "Horóscopo Personalizado",
+      "description": "Perspectivas basadas en tránsitos calculadas desde tu carta natal para una lectura única."
+    },
+    "horoscope": {
+      "title": "Horóscopo Diario",
+      "description": "Obtén el pronóstico cósmico de hoy para tu signo — amor, carrera, dinero y salud."
+    },
+    "synastry": {
+      "title": "Sinastría",
+      "description": "Explora la compatibilidad astrológica entre dos personas con un reporte completo aspecto por aspecto."
+    }
+  },
+  "about": {
+    "title": "Sobre Sanación Holística",
+    "description": "Mystik ofrece asesoramiento astrológico y sanación energética Reiki para ayudar a los clientes a alcanzar su mayor potencial. Al comprender el papel que los ciclos planetarios juegan en sus vidas, los clientes están empoderados para tomar mejores decisiones que resultan en vidas más satisfactorias."
+  },
+  "horoscope": {
+    "title": "Elige tu signo zodiacal",
+    "description": "¿Cuál es tu signo? Descubre tu horóscopo de hoy",
+    "back": "Volver",
+    "reading_unavailable": "Lectura No Disponible",
+    "energy_forecast": "Pronóstico de Energía",
+    "cosmic_context": "Contexto Cósmico",
+    "moon_phase": "Fase Lunar",
+    "moon_sign": "Signo Lunar",
+    "planetary_aspects": "Aspectos Planetarios",
+    "daily_anchors": "Anclajes del Día",
+    "color": "Color",
+    "number": "Número",
+    "time": "Hora",
+    "overall": "General",
+    "do": "Hacer",
+    "dont": "Evitar"
+  },
+  "personalized": {
+    "title": "Tu Mapa Cósmico Personal",
+    "description": "Ingresa tus datos de nacimiento para una lectura basada en tu carta natal única y los tránsitos planetarios de hoy"
+  },
+  "synastry_section": {
+    "title": "Compatibilidad Cósmica",
+    "description": "Descubre las dinámicas astrológicas entre tú y otra persona"
+  },
+  "synastry_page": {
+    "meta_title": "Reporte de Sinastría — Mystik",
+    "meta_description": "Descubre la compatibilidad astrológica entre dos personas con un reporte completo de sinastría.",
+    "error_title": "Algo salió mal",
+    "invalid_payload": "Los datos de sinastría parecen inválidos o faltantes. Por favor regresa e intenta de nuevo.",
+    "back": "← Volver al Inicio"
+  },
+  "synastry_form": {
+    "person_a": "Persona A",
+    "person_b": "Persona B",
+    "back": "← Volver",
+    "next": "Siguiente →",
+    "submit": "Ver reporte",
+    "calculating": "Calculando…",
+    "name_label": "Nombre (Opcional)",
+    "name_placeholder": "Ingresa un nombre",
+    "date_of_birth": "Fecha de Nacimiento",
+    "time_approx": "Hora (Aprox.)",
+    "place_of_birth": "Lugar de Nacimiento",
+    "city_searching": "Buscando ciudad..."
+  },
+  "birth_form": {
+    "birth_date": "Fecha de Nacimiento",
+    "birth_time": "Hora de Nacimiento",
+    "time_unknown": "No sé",
+    "time_unknown_set": "Hora desconocida ✓",
+    "time_unknown_note": "Nota: La precisión para casas y ascendente será limitada. Usaremos las 12:00 PM como referencia.",
+    "birth_city": "Ciudad de Nacimiento",
+    "city_searching": "Buscando ciudad...",
+    "submit": "Ver la guía de hoy"
+  },
+  "footer": {
+    "description": "Obtén un análisis personal de tu situación actual que te ayudará a encontrar soluciones transformadoras en cualquier esfera de tu vida.",
+    "school_title": "Politécnico Internacional",
+    "school_location": "Colombia — Bogotá D.C.",
+    "links_title": "Enlances",
+    "copyright": "© {year} Mystik. Todos los derechos reservados."
+  },
+  "city_autocomplete": {
+    "placeholder": "Buscar ciudad...",
+    "no_results": "Sin resultados. Intenta con otra ortografía.",
+    "search_error": "No se pudo buscar ciudades. Por favor intenta de nuevo.",
+    "results_label": "Resultados de búsqueda de ciudades",
+    "searching": "Buscando ciudad..."
+  },
+  "aspect_explorer": {
+    "title": "Explorador de Aspectos",
+    "filter_all": "Todos",
+    "sort_rank": "Por Rango",
+    "sort_intensity": "Por Intensidad",
+    "showing": "Mostrando {shown} de {total} aspecto",
+    "showing_plural": "Mostrando {shown} de {total} aspectos",
+    "show_less": "Mostrar menos",
+    "view_all": "Ver los {count} aspectos",
+    "no_aspects": "Ningún aspecto coincide con este filtro."
+  },
+  "domain_scores": {
+    "title": "Puntajes por Dominio",
+    "top_drivers": "Principales Factores",
+    "higher_is_more": "(mayor = más)"
+  },
+  "strengths_challenges": {
+    "strengths": "Fortalezas",
+    "challenges": "Desafíos",
+    "no_strengths": "No se identificaron fortalezas.",
+    "no_challenges": "No se identificaron desafíos."
+  },
+  "summary_header": {
+    "connection_archetype": "Arquetipo de Conexión",
+    "overall": "General",
+    "bond_tone": "Tono del Vínculo",
+    "core_dynamic": "Dinámica Central",
+    "watch_for": "Tener en Cuenta"
+  },
+  "ritual_drawer": {
+    "close": "Cerrar",
+    "intensity": "Intensidad",
+    "supportive": "Favorable",
+    "challenging": "Desafiante",
+    "balanced": "Equilibrado",
+    "perspective": "perspectiva",
+    "interpretation_note": "Nota interpretativa:",
+    "leans": "Este aspecto tiende a ser",
+    "polarity_score": "con un puntaje de polaridad de",
+    "balanced_note": "Puntajes cercanos a cero indican una dinámica más equilibrada."
+  },
+  "zodiac_signs": {
+    "aries": "Aries",
+    "taurus": "Tauro",
+    "gemini": "Géminis",
+    "cancer": "Cáncer",
+    "leo": "Leo",
+    "virgo": "Virgo",
+    "libra": "Libra",
+    "scorpio": "Escorpio",
+    "sagittarius": "Sagitario",
+    "capricorn": "Capricornio",
+    "aquarius": "Acuario",
+    "pisces": "Piscis",
+    "Jan": "Ene",
+    "Feb": "Feb",
+    "Mar": "Mar",
+    "Apr": "Abr",
+    "May": "May",
+    "Jun": "Jun",
+    "Jul": "Jul",
+    "Aug": "Ago",
+    "Sep": "Sep",
+    "Oct": "Oct",
+    "Nov": "Nov",
+    "Dec": "Dic"
+  }
+}

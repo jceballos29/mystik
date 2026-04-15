@@ -16,12 +16,14 @@ import {
 } from "@/lib/motion"
 import { zodiacSigns } from "@/lib/zodiac-signs"
 import { motion } from "framer-motion"
+import { useTranslations } from "next-intl"
 import Image from "next/image"
 import Link from "next/link"
 import { ZodiacSignCard } from "../zodiac-sign-card"
 import { useState } from "react"
 
 export function Horoscope() {
+  const t = useTranslations("horoscope")
   const [hovered, setHovered] = useState<string | null>(null)
 
   return (
@@ -47,10 +49,10 @@ export function Horoscope() {
             className="h-12 w-20"
           />
           <h2 className="mt-4 mb-8 scroll-m-20 font-title text-5xl font-semibold tracking-wider text-balance text-primary first:mt-0">
-            Choose your zodiac sign
+            {t("title")}
           </h2>
           <p className="mx-auto max-w-3xl text-center leading-relaxed text-muted-foreground">
-            What&apos;s your sign? Discover your horoscope for today
+            {t("description")}
           </p>
         </motion.header>
         <motion.ul
