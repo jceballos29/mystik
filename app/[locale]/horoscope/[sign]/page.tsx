@@ -22,11 +22,11 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { routing } from "@/i18n/routing"
 
-function ErrorState({ message }: { message: string }) {
+function ErrorState({ title, message }: { title: string; message: string }) {
   return (
     <div className="border border-star-dust-600 p-8 text-center">
       <p className="mb-4 text-[10px] font-bold tracking-[0.4em] text-primary uppercase">
-        Reading Unavailable
+        {title}
       </p>
       <p className="font-sans text-base leading-relaxed font-medium text-star-dust-300">
         {message}
@@ -46,12 +46,15 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; sign: string }>
 }): Promise<Metadata> {
-  const { sign } = await params
+  const { sign, locale } = await params
   const zodiacSign = zodiacSigns.find((z) => z.id === sign)
   if (!zodiacSign) return {}
+  const t = await getTranslations({ locale, namespace: "horoscope" })
+  const tZodiac = await getTranslations({ locale, namespace: "zodiac_signs" })
+  const signName = tZodiac(sign)
   return {
-    title: `${zodiacSign.name} Horoscope Today — Mystik`,
-    description: `Daily horoscope for ${zodiacSign.name}. Love, career, money, and health forecast.`,
+    title: t("meta_title", { sign: signName }),
+    description: t("meta_description", { sign: signName }),
   }
 }
 
@@ -66,9 +69,10 @@ export default async function ZodiacSignPage({
   if (!zodiacSign) notFound()
 
   const t = await getTranslations({ locale, namespace: "horoscope" })
+  const tZodiac = await getTranslations({ locale, namespace: "zodiac_signs" })
 
   const { start, end } = zodiacSign.date
-  const dateLabel = `${start.month} ${start.day} – ${end.month} ${end.day}`
+  const dateLabel = `${tZodiac(start.month)} ${start.day} \u2013 ${tZodiac(end.month)} ${end.day}`
 
   const signIndex = zodiacSigns.findIndex((z) => z.id === sign)
   const nextSign = zodiacSigns[(signIndex + 1) % zodiacSigns.length]
@@ -137,7 +141,7 @@ export default async function ZodiacSignPage({
             )}
           </div>
 
-          {result.error && <ErrorState message={result.error} />}
+          {result.error && <ErrorState title={t("reading_unavailable")} message={result.error} />}
 
           {horoscope && meta && (
             <>

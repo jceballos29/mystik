@@ -45,7 +45,22 @@
     "time": "Hora",
     "overall": "General",
     "do": "Hacer",
-    "dont": "Evitar"
+    "dont": "Evitar",
+    "meta_title": "Horóscopo de {sign} Hoy — Mystik",
+    "meta_description": "Horóscopo diario para {sign}. Amor, carrera, dinero y salud.",
+    "personalize_reading": "Tu Lectura Personal",
+    "focus_areas": "Áreas de Enfoque",
+    "transit_deep_dive": "Inmersión en Tránsitos",
+    "natal_chart_today": "Tu carta natal hoy",
+    "applying": "Aplicándose",
+    "separating": "Separándose",
+    "significant": "Significativo",
+    "show_guidance": "Ver orientación",
+    "hide_guidance": "Ocultar orientación",
+    "change_details": "Cambiar Datos",
+    "try_again": "Intentar de Nuevo",
+    "missing_birth_details": "Faltan datos de nacimiento. Por favor completa el formulario nuevamente.",
+    "invalid_birth_details": "Datos de nacimiento inválidos en la URL. Por favor completa el formulario nuevamente."
   },
   "personalized": {
     "title": "Tu Mapa Cósmico Personal",
@@ -60,7 +75,13 @@
     "meta_description": "Descubre la compatibilidad astrológica entre dos personas con un reporte completo de sinastría.",
     "error_title": "Algo salió mal",
     "invalid_payload": "Los datos de sinastría parecen inválidos o faltantes. Por favor regresa e intenta de nuevo.",
-    "back": "← Volver al Inicio"
+    "back": "← Volver al Inicio",
+    "report_title": "Reporte de Sinastría",
+    "report_link_invalid": "El enlace del reporte es inválido o ha expirado. Por favor completa el formulario nuevamente.",
+    "load_error": "No se pudo cargar el reporte de sinastría.",
+    "try_again": "← Intentar de nuevo",
+    "person_a_default": "Persona A",
+    "person_b_default": "Persona B"
   },
   "synastry_form": {
     "person_a": "Persona A",

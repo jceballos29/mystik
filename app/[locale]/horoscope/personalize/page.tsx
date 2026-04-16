@@ -92,6 +92,7 @@ function TransitCard({
   index: number
 }) {
   const [expanded, setExpanded] = useState(false)
+  const t = useTranslations("horoscope")
   const {
     transit_planet,
     natal_planet,
@@ -130,11 +131,11 @@ function TransitCard({
               is_applying ? "text-koromiko-400" : "text-star-dust-600"
             }`}
           >
-            {is_applying ? "Applying" : "Separating"}
+            {is_applying ? t("applying") : t("separating")}
           </span>
           {score > 80 && (
             <span className="ml-auto border border-koromiko-500/30 bg-koromiko-500/10 px-2 py-0.5 text-[8px] font-bold tracking-widest text-koromiko-400 uppercase">
-              Significant
+              {t("significant")}
             </span>
           )}
         </div>
@@ -148,7 +149,7 @@ function TransitCard({
               onClick={() => setExpanded(!expanded)}
               className="flex items-center gap-2 text-[9px] tracking-widest text-star-dust-600 uppercase transition-colors hover:text-star-dust-400"
             >
-              {expanded ? "Hide guidance" : "Show guidance"}
+              {expanded ? t("hide_guidance") : t("show_guidance")}
               {expanded ? (
                 <ChevronUp className="h-3 w-3" />
               ) : (
@@ -211,7 +212,7 @@ function ErrorState({
           onClick={onRetry}
           className="mt-4 h-10 border border-star-dust-600 px-8 text-[10px] font-bold tracking-[0.4em] text-primary uppercase transition-colors hover:border-koromiko-500/50"
         >
-          Try Again
+          {t("try_again")}
         </button>
       )}
     </div>
@@ -262,14 +263,14 @@ function PersonalizeContent() {
       lat == null ||
       lon == null
     )
-      return "Missing birth details. Please fill in the form again."
+      return t("missing_birth_details")
     const numericFields = [year, month, day, lat, lon]
     if (hour != null) numericFields.push(hour)
     if (min != null) numericFields.push(min)
     if (numericFields.map(Number).some(Number.isNaN))
-      return "Invalid birth details in the URL. Please fill in the form again."
+      return t("invalid_birth_details")
     return null
-  }, [year, month, day, lat, lon, hour, min])
+  }, [year, month, day, lat, lon, hour, min, t])
 
   const [data, setData] = useState<HoroscopeData | null>(null)
   const [apiError, setApiError] = useState<string | null>(null)
@@ -334,7 +335,7 @@ function PersonalizeContent() {
           Number(year),
           Number(month) - 1,
           Number(day)
-        ).toLocaleDateString("en-US", {
+        ).toLocaleDateString(locale, {
           year: "numeric",
           month: "long",
           day: "numeric",
@@ -350,7 +351,7 @@ function PersonalizeContent() {
           className="flex items-center gap-2 text-[10px] font-bold tracking-[0.4em] text-star-dust-500 uppercase transition-colors hover:text-star-dust-300"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          Change Details
+          {t("change_details")}
         </button>
         <div className="flex flex-wrap items-center gap-3">
           {birthDateLabel && (
@@ -377,14 +378,13 @@ function PersonalizeContent() {
         <>
           <div className="mb-16 text-center">
             <p className="mb-4 text-[10px] font-bold tracking-[0.4em] text-star-dust-500 uppercase">
-              Your Personal Reading
+              {t("personalize_reading")}
             </p>
             <h1 className="mb-3 font-title text-6xl font-extralight tracking-tighter text-koromiko-300 capitalize md:text-7xl">
               {data.sign}
             </h1>
             <p className="text-[11px] tracking-widest text-star-dust-600 uppercase">
-              Today ·{" "}
-              {new Date().toLocaleDateString("en-US", {
+              {new Date().toLocaleDateString(locale, {
                 month: "long",
                 day: "numeric",
                 year: "numeric",
@@ -396,7 +396,7 @@ function PersonalizeContent() {
             data.personal.focus_areas.length > 0 && (
               <div className="mb-12">
                 <p className="mb-4 text-[10px] font-bold tracking-[0.4em] text-star-dust-500 uppercase">
-                  Focus Areas
+                  {t("focus_areas")}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {data.personal.focus_areas.map((area) => (
@@ -451,11 +451,11 @@ function PersonalizeContent() {
               <div className="clear-both mb-16">
                 <div className="mb-10 flex items-center gap-6">
                   <h2 className="shrink-0 text-[10px] font-bold tracking-[0.4em] text-star-dust-500 uppercase">
-                    Transit Deep-Dive
+                    {t("transit_deep_dive")}
                   </h2>
                   <div className="h-px flex-1 bg-star-dust-800" />
                   <span className="shrink-0 text-[9px] text-star-dust-700 italic">
-                    Your natal chart today
+                    {t("natal_chart_today")}
                   </span>
                 </div>
                 <div className="relative">

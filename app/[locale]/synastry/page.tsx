@@ -54,19 +54,27 @@ function decodePayload(
   }
 }
 
-function ErrorState({ message }: { message: string }) {
+function ErrorState({
+  title,
+  message,
+  tryAgain,
+}: {
+  title: string
+  message: string
+  tryAgain: string
+}) {
   return (
     <div
       role="alert"
       className="flex min-h-svh flex-col items-center justify-center px-6 text-center"
     >
-      <Typography.H2 className="mb-4">Something went wrong</Typography.H2>
+      <Typography.H2 className="mb-4">{title}</Typography.H2>
       <p className="mb-8 max-w-md text-sm text-muted-foreground">{message}</p>
       <Link
         href="/#synastry"
         className="border border-star-dust-700 px-6 py-3 text-sm text-foreground transition-colors hover:border-koromiko-500/50"
       >
-        ← Try again
+        {tryAgain}
       </Link>
     </div>
   )
@@ -78,12 +86,17 @@ export default async function SynastryPage({
 }: SynastryPageProps) {
   const { q } = await searchParams
   const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "synastry_page" })
 
   const payload = decodePayload(q)
 
   if (!payload) {
     return (
-      <ErrorState message="The report link is invalid or expired. Please fill out the form again." />
+      <ErrorState
+        title={t("error_title")}
+        message={t("report_link_invalid")}
+        tryAgain={t("try_again")}
+      />
     )
   }
 
@@ -92,15 +105,17 @@ export default async function SynastryPage({
   if (!result.data) {
     return (
       <ErrorState
-        message={result.error ?? "Could not load the synastry report."}
+        title={t("error_title")}
+        message={result.error ?? t("load_error")}
+        tryAgain={t("try_again")}
       />
     )
   }
 
   const { data } = result
 
-  const personAName = payload.person_a.name || "Person A"
-  const personBName = payload.person_b.name || "Person B"
+  const personAName = payload.person_a.name || t("person_a_default")
+  const personBName = payload.person_b.name || t("person_b_default")
 
   return (
     <main className="min-h-svh">
@@ -111,7 +126,7 @@ export default async function SynastryPage({
         <div className="absolute inset-0 -z-10 bg-linear-to-b from-background/50 to-background" />
         <div className="z-10 mx-auto max-w-3xl py-32 text-center">
           <Typography.H1 className="mb-4 text-4xl lg:text-5xl">
-            Synastry Report
+            {t("report_title")}
           </Typography.H1>
           <p className="font-medium text-muted-foreground">
             {personAName} &amp; {personBName}

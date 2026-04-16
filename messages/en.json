@@ -45,7 +45,22 @@
     "time": "Time",
     "overall": "Overall",
     "do": "Do",
-    "dont": "Don't"
+    "dont": "Don't",
+    "meta_title": "{sign} Horoscope Today \u2014 Mystik",
+    "meta_description": "Daily horoscope for {sign}. Love, career, money, and health forecast.",
+    "personalize_reading": "Your Personal Reading",
+    "focus_areas": "Focus Areas",
+    "transit_deep_dive": "Transit Deep-Dive",
+    "natal_chart_today": "Your natal chart today",
+    "applying": "Applying",
+    "separating": "Separating",
+    "significant": "Significant",
+    "show_guidance": "Show guidance",
+    "hide_guidance": "Hide guidance",
+    "change_details": "Change Details",
+    "try_again": "Try Again",
+    "missing_birth_details": "Missing birth details. Please fill in the form again.",
+    "invalid_birth_details": "Invalid birth details in the URL. Please fill in the form again."
   },
   "personalized": {
     "title": "Your Personal Cosmic Blueprint",
@@ -60,7 +75,13 @@
     "meta_description": "Discover the astrological compatibility between two people with a full synastry report.",
     "error_title": "Something went wrong",
     "invalid_payload": "The synastry data appears to be invalid or missing. Please go back and try again.",
-    "back": "← Back to Home"
+    "back": "\u2190 Back to Home",
+    "report_title": "Synastry Report",
+    "report_link_invalid": "The report link is invalid or expired. Please fill out the form again.",
+    "load_error": "Could not load the synastry report.",
+    "try_again": "\u2190 Try again",
+    "person_a_default": "Person A",
+    "person_b_default": "Person B"
   },
   "synastry_form": {
     "person_a": "Person A",
